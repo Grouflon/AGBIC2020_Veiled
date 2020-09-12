@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 5b6c8bd84bf5eda4a94d3feac85e0f69
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - paletteSwitcherShader: {fileID: 4800000, guid: 2d59b2bb52cea6a4b8402b3c834dd935,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

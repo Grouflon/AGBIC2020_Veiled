@@ -15,8 +15,21 @@ public struct Zone
     public GameObject prefab;
 }
 
+[System.Serializable]
+public struct Palette
+{
+    public string name;
+    public Color lightColor;
+    public Color darkColor;
+}
+
 public class GameManager : MonoBehaviour
 {
+    [Header("Gameplay")]
+    public List<Zone> zones;
+    public List<Palette> palettes;
+
+    [Header("Internal")]
     public RectTransform cursorTransform;
     public TextAsset inkAsset;
     public TMPro.TextMeshProUGUI textContainer;
@@ -25,11 +38,26 @@ public class GameManager : MonoBehaviour
     public PlayableAsset backgroundMaskReveal;
     public PlayableAsset backgroundMaskHide;
     public RectTransform backgroundContainer;
-    public List<Zone> zones;
+    public PalettePostProcess palettePostProcess;
 
     private Story m_story;
     private bool m_isAnimatingText = false;
     private string m_currentLocation = "";
+
+    public void setPalette(string _name)
+    {
+        foreach (Palette p in palettes)
+        {
+            if (p.name == _name)
+            {
+                palettePostProcess.lightColor = p.lightColor;
+                palettePostProcess.darkColor = p.darkColor;
+                return;
+            }
+        }
+        palettePostProcess.lightColor = Color.white;
+        palettePostProcess.darkColor = Color.black;
+    }
 
     bool IsTimelinePlaying()
     {
@@ -39,6 +67,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        setPalette("default");
+
         textContainer.text = "";
 
         m_story = new Story(inkAsset.text);
@@ -125,11 +155,17 @@ public class GameManager : MonoBehaviour
                 string[] split = tag.Split(':');
                 if (split.Length >= 2)
                 {
-                    if (split[0].Trim() == "location")
+                    if (split[0].Trim() == "palette")
+                    {
+                        setPalette(split[1].Trim());
+                    }
+                    else if (split[0].Trim() == "location")
                     {
                         yield return StartCoroutine(GoToLocation(split[1].Trim()));
                         yield return new WaitForSeconds(1.0f);
                     }
+
+                    
                 }
             }
 

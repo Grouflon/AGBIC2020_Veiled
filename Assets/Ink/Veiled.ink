@@ -17,7 +17,7 @@ The place seems abandonned except for a faint light dancing from one of the brok
 
 === Hall ===
 #location: hall
-Everything is the hall seems stuck in time but for the natural decay. It is as if people had just stopped coming to work one day.
+Everything in the hall seems stuck in time but for the natural decay. It is as if people had just stopped coming to work one day.
 Some things seems to have been recently moved though.
 ->choice
 = choice
@@ -26,6 +26,7 @@ Some things seems to have been recently moved though.
     ->Bedroom
 
 + [Climb the stairs <stairs>]
+    #palette: blood
     The stairs havec crumbled. You won't be able to reach the upper floors this way.
     ->choice
 
