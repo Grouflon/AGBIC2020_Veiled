@@ -10,6 +10,11 @@ public class ChoiceBoxController : MonoBehaviour
     [HideInInspector]
     public RectTransform rectTransform { get; private set; }
 
+    public void setVisible(bool _visible)
+    {
+        gameObject.SetActive(_visible);
+    }
+
     public void setText(string _text)
     {
         text.SetText(_text);
@@ -17,7 +22,7 @@ public class ChoiceBoxController : MonoBehaviour
         rectTransform.sizeDelta = new Vector2(size.x + 20.0f, rectTransform.sizeDelta.y);
     }
 
-    private void Start()
+    private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         text.autoSizeTextContainer = true;

@@ -30,10 +30,9 @@ public class GameManager : MonoBehaviour
     public List<Palette> palettes;
 
     [Header("Internal")]
-    public RectTransform cursorTransform;
+    public CursorController cursor;
     public TextAsset inkAsset;
     public TMPro.TextMeshProUGUI textContainer;
-    public ChoiceBoxController choiceBox;
     public PlayableDirector backgroundMask;
     public PlayableAsset backgroundMaskReveal;
     public PlayableAsset backgroundMaskHide;
@@ -71,6 +70,9 @@ public class GameManager : MonoBehaviour
 
         textContainer.text = "";
 
+        cursor.SetMode(CursorMode.Cross);
+        cursor.choiceBox.setVisible(false);
+
         m_story = new Story(inkAsset.text);
         Cursor.visible = false;
 
@@ -80,20 +82,22 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xMouseRatio = Input.mousePosition.x / Screen.width;
-        float yMouseRatio = (Input.mousePosition.y - Screen.height) / Screen.height;
-        Vector3 cursorPosition = new Vector3((xMouseRatio - 0.5f) * 640.0f, (yMouseRatio + 0.5f) * 360.0f, cursorTransform.localPosition.z);
-        cursorTransform.localPosition = cursorPosition;
-        choiceBox.rectTransform.localPosition = cursorPosition + new Vector3(4.0f, -1.0f, 0.0f);
-
-        choiceBox.gameObject.SetActive(false);
-        cursorTransform.gameObject.SetActive(false);
-
         bool canInteract = !IsTimelinePlaying() && !m_isAnimatingText && m_story.currentChoices.Count > 0;
+
+        // CURSOR
         if (canInteract)
         {
-            cursorTransform.gameObject.SetActive(true);
+            cursor.SetMode(CursorMode.Cross);
+        }
+        else
+        {
+            cursor.SetMode(CursorMode.Clock);
+        }
 
+        // CHECK WHICH ZONE IS HOVERED
+        Choice hoveredChoice = null;
+        if (canInteract)
+        {
             PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
             pointerEventData.position = Input.mousePosition;
 
@@ -111,20 +115,36 @@ public class GameManager : MonoBehaviour
 
                         if (zone == imageZone.id)
                         {
-                            choiceBox.gameObject.SetActive(true);
-                            choiceBox.setText(text);
-
-                            if (Input.GetMouseButtonDown(0))
-                            {
-                                textContainer.text = "";
-                                m_story.ChooseChoiceIndex(choice.index);
-                                StartCoroutine(OnAdvanceStory());
-                            }
+                            hoveredChoice = choice;
                             break;
                         }
                     }
+
+                    if (hoveredChoice != null)
+                        break;
                 }
             }
+        }
+
+        // MANAGE CHOICE INPUT & CHOICE BOX
+        if (hoveredChoice)
+        {
+            string zone;
+            string text = StripTextFromZoneTag(hoveredChoice.text, out zone);
+
+            cursor.choiceBox.setVisible(true);
+            cursor.choiceBox.setText(text);
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                textContainer.text = "";
+                m_story.ChooseChoiceIndex(hoveredChoice.index);
+                StartCoroutine(OnAdvanceStory());
+            }
+        }
+        else
+        {
+            cursor.choiceBox.setVisible(false);
         }
     }
 
