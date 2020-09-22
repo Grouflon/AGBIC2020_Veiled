@@ -30,8 +30,6 @@ public class CursorController : MonoBehaviour
         float yMouseRatio = (Input.mousePosition.y - Screen.height) / Screen.height;
         Vector3 cursorPosition = new Vector3(Mathf.Round((xMouseRatio - 0.5f) * 640.0f), Mathf.Round((yMouseRatio + 0.5f) * 360.0f), rectTransform.localPosition.z);
         rectTransform.localPosition = cursorPosition;
-
-        Debug.Log(cursorPosition);
     }
 
     public void SetChoiceBoxEnabled(bool _enabled)

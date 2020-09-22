@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 using Ink.Runtime;
 using TMPro;
+using UnityEngine.Audio;
 
 using System.Text.RegularExpressions;
 
@@ -26,8 +27,9 @@ public struct Palette
 public class GameManager : MonoBehaviour
 {
     [Header("Gameplay")]
-    public List<Zone> zones;
-    public List<Palette> palettes;
+    public GameContent content;
+    public float characterDisplayInterval = 0.2f;
+    public float characterDisplayIntervalRandomDeviation = 0.01f;
 
     [Header("Internal")]
     public CursorController cursor;
@@ -38,6 +40,9 @@ public class GameManager : MonoBehaviour
     public PlayableAsset backgroundMaskHide;
     public RectTransform backgroundContainer;
     public PalettePostProcess palettePostProcess;
+    public AudioFXController audioFXPrefab;
+    public AudioClip[] typewriterFX;
+    public AudioMixerGroup typewriterMixerGroup;
 
     private Story m_story;
     private bool m_isAnimatingText = false;
@@ -45,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     public void setPalette(string _name)
     {
-        foreach (Palette p in palettes)
+        foreach (Palette p in content.palettes)
         {
             if (p.name == _name)
             {
@@ -140,11 +145,22 @@ public class GameManager : MonoBehaviour
                 textContainer.text = "";
                 m_story.ChooseChoiceIndex(hoveredChoice.index);
                 StartCoroutine(OnAdvanceStory());
+                return;
             }
         }
         else
         {
             cursor.choiceBox.setVisible(false);
+        }
+
+        // SKIP
+        if (m_isAnimatingText && !IsTimelinePlaying())
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                m_skipRequested = true;
+                return;
+            }
         }
     }
 
@@ -167,7 +183,8 @@ public class GameManager : MonoBehaviour
 
         while (m_story.canContinue)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return StartCoroutine(SkippablePause(0.5f));
+
             string line = m_story.Continue();
 
             foreach (string tag in m_story.currentTags)
@@ -184,15 +201,57 @@ public class GameManager : MonoBehaviour
                         yield return StartCoroutine(GoToLocation(split[1].Trim()));
                         yield return new WaitForSeconds(1.0f);
                     }
-
-                    
                 }
             }
 
-            textContainer.text = textContainer.text + line + "\n\n";
-            yield return new WaitForSeconds(1.0f);
+            m_characterTimer = 0.0f;
+            m_displayedCharacterCount = 0;
+
+            if (characterDisplayInterval <= 0.0f || m_skipRequested)
+            {
+                textContainer.text = textContainer.text + line;
+            }
+            else
+            {
+                float nextCharacterDisplayInterval = characterDisplayInterval + (Random.value * 2.0f - 1.0f) * characterDisplayIntervalRandomDeviation;
+                while (m_displayedCharacterCount < line.Length)
+                {
+                    m_characterTimer += Time.deltaTime;
+                    while (m_characterTimer >= nextCharacterDisplayInterval)
+                    {
+                        textContainer.text = textContainer.text + line.Substring(m_displayedCharacterCount, 1);
+
+                        if (m_displayedCharacterCount % 4 == 0)
+                        {
+                            int soundId = Random.Range(0, typewriterFX.Length);
+                            SpawnAudioFX(typewriterFX[soundId], typewriterMixerGroup);
+                        }
+
+                        ++m_displayedCharacterCount;
+                        m_characterTimer -= nextCharacterDisplayInterval;
+
+                        nextCharacterDisplayInterval = characterDisplayInterval + (Random.value * 2.0f - 1.0f) * characterDisplayIntervalRandomDeviation;
+                    }
+
+                    yield return new WaitForEndOfFrame();
+
+                    if (m_skipRequested)
+                    {
+                        textContainer.text = textContainer.text + line.Substring(m_displayedCharacterCount, line.Length - m_displayedCharacterCount);
+                        m_skipRequested = false;
+                        break;
+                    }
+                }
+            }
+
+            textContainer.text = textContainer.text + "\n\n";
+
+            yield return StartCoroutine(SkippablePause(0.5f));
+            m_skipRequested = false;
         }
+
         m_isAnimatingText = false;
+        m_skipRequested = false;
         yield return null;
     }
 
@@ -220,7 +279,7 @@ public class GameManager : MonoBehaviour
                 {
                     Destroy(backgroundContainer.GetChild(i).gameObject);
                 }
-                foreach (Zone zone in zones)
+                foreach (Zone zone in content.zones)
                 {
                     if (zone.id == m_currentLocation)
                     {
@@ -236,4 +295,31 @@ public class GameManager : MonoBehaviour
         }
         yield return null;
     }
+
+    IEnumerator SkippablePause(float _duration)
+    {
+        float pauseTimer = 0.0f;
+        while (pauseTimer < _duration && !m_skipRequested)
+        {
+            pauseTimer += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        yield return null;
+    }
+
+    public AudioFXController SpawnAudioFX(AudioClip _clip, AudioMixerGroup _mixerGroup = null)
+    {
+        AudioFXController controller = Instantiate<AudioFXController>(audioFXPrefab, Vector3.zero, Quaternion.identity);
+        controller.audioSource.clip = _clip;
+        if (_mixerGroup)
+        {
+            controller.audioSource.outputAudioMixerGroup = _mixerGroup;
+        }
+        controller.audioSource.Play();
+        return controller;
+    }
+
+    private int m_displayedCharacterCount = -1;
+    private float m_characterTimer = 0.0f;
+    private bool m_skipRequested = false;
 }

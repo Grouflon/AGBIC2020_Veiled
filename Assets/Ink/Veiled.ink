@@ -1,4 +1,5 @@
-->Frontyard
+//->Frontyard
+->Bedroom
 
 === Frontyard ===
 #location: frontyard
@@ -23,15 +24,15 @@ Some things seems to have been recently moved though.
 = choice
 + [Inspect the bedroom <bedroom>]
     There used to be a door there but it is gone now. The room is wide open.
-    ->Bedroom
+    ->Room
 
 + [Climb the stairs <stairs>]
     #palette: blood
     The stairs havec crumbled. You won't be able to reach the upper floors this way.
     ->choice
 
-=== Bedroom ===
-#location: bedroom
+=== Room ===
+#location: room
 An abandonned bedroom.
 The medical equipment suggests that some medical experiments were done here.
 ->choice
@@ -44,6 +45,37 @@ The medical equipment suggests that some medical experiments were done here.
 + [Look at the window <window>]
     JUMPSCARE !
     ->end
+
+=== Bedroom ===
+#location: bedroom_front
+Nice bedroom
+What do we do ?
+->choice
+= choice
++ [Inspect the bathroom <door>]
+  You enter the bathroom.
+  ->Bathroom
++ [Look at the bed <bed>]
+  Nothing on the bed, nothing under.
+  ->choice
++ [Inspect the crucifix <crucifix>]
+  People here should have been quite religious.
+  ->choice
++ [Open the door <locked_door>]
+  You try to open the door but it is jammed.
+  ->choice
+
+=== Bathroom ===
+#location: bathroom
+Nice bathroom
+What do we do ?
+->choice
+= choice
++ [Inspect the tub <tub>]
+  Dirty.
+  ->choice
++ [Back to the bedroom <back>]
+  ->Bedroom
 
 === end ===
 THE END!
