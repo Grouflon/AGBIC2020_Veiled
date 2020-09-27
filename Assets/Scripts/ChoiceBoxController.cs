@@ -27,4 +27,8 @@ public class ChoiceBoxController : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         text.autoSizeTextContainer = true;
     }
+
+    private void Update()
+    {
+    }
 }

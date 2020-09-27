@@ -39,7 +39,7 @@ Nice bedroom.
   -> choice
 
   + [Inspect the bedside table <bedside_table>]
-  The is a family album here.
+  There is a family album here.
   -> Eye_Bedroom_Album
 
 === Eye_Bedroom_Album ===
@@ -75,7 +75,7 @@ A dirty bathroom.
   You come closer to the sink
   -> Eye_Syringe
 
-+ [Cross the door <door>]
++ [Go through the door <door>]
   {
     - !eye_visited_cagibi:
       What is on the other side ?
@@ -145,8 +145,14 @@ What is that thing?!
 -> choice
 = choice
 + [Approach the dark heap <blob>]
-  Ho lord, I think it is still moving.
-  Something seems to be coming out of it.
+  {
+    - eye_fleeing_blob:
+      It is growing and moving in my direction.
+      I need to get out of here.
+    - else:
+      Ho lord, I think it is still moving.
+      Something seems to be coming out of it.
+  }
   -> choice
 
 + {!(inventory ? attic_key)}[Look at the tainted object <key>]

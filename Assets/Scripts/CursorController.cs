@@ -32,6 +32,32 @@ public class CursorController : MonoBehaviour
         float yMouseRatio = (Input.mousePosition.y - Screen.height) / Screen.height;
         Vector3 cursorPosition = new Vector3(Mathf.Round((xMouseRatio - 0.5f) * 640.0f), Mathf.Round((yMouseRatio + 0.5f) * 360.0f), rectTransform.localPosition.z);
         rectTransform.localPosition = cursorPosition;
+
+        // OFFSET CHOICE BOX
+        float xOffset = 4.0f;
+        float yOffset = 4.0f;
+        float x = 0.0f;
+        float y = xOffset;
+        float dx = cursorPosition.x + 320.0f + xOffset + choiceBox.rectTransform.sizeDelta.x;
+        if (dx > 460.0f)
+        {
+            x = -xOffset - choiceBox.rectTransform.sizeDelta.x;
+        }
+        else
+        {
+            x = xOffset;
+        }
+
+        float dy = cursorPosition.y + 180.0f - yOffset - choiceBox.rectTransform.sizeDelta.y;
+        if (dy <= 22.0f)
+        {
+            y = yOffset + choiceBox.rectTransform.sizeDelta.y;
+        }
+        else
+        {
+            y = -yOffset + 3.0f;
+        }
+        choiceBox.rectTransform.localPosition = new Vector3(x, y, choiceBox.rectTransform.localPosition.z);
     }
 
     public void setChoiceBoxEnabled(bool _enabled)
