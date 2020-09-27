@@ -6,13 +6,15 @@ using UnityEngine.UI;
 public enum CursorMode
 {
     None,
-    Cross,
+    Idle,
+    Highlight,
     Clock
 }
 
 public class CursorController : MonoBehaviour
 {
-    public RectTransform cross;
+    public RectTransform crossIdle;
+    public RectTransform crossHighlight;
     public RectTransform clock;
     public ChoiceBoxController choiceBox;
 
@@ -32,26 +34,31 @@ public class CursorController : MonoBehaviour
         rectTransform.localPosition = cursorPosition;
     }
 
-    public void SetChoiceBoxEnabled(bool _enabled)
+    public void setChoiceBoxEnabled(bool _enabled)
     {
         choiceBox.gameObject.SetActive(_enabled);
     }
 
-    public void SetChoiceBoxText(string _text)
+    public void setChoiceBoxText(string _text)
     {
         choiceBox.setText(_text);
     }
 
-    public void SetMode(CursorMode _mode)
+    public void setMode(CursorMode _mode)
     {
         if (_mode == m_mode)
             return;
 
         switch(m_mode)
         {
-            case CursorMode.Cross:
+            case CursorMode.Idle:
                 {
-                    cross.gameObject.SetActive(false);
+                    crossIdle.gameObject.SetActive(false);
+                }
+                break;
+            case CursorMode.Highlight:
+                {
+                    crossHighlight.gameObject.SetActive(false);
                 }
                 break;
             case CursorMode.Clock:
@@ -67,9 +74,14 @@ public class CursorController : MonoBehaviour
 
         switch (m_mode)
         {
-            case CursorMode.Cross:
+            case CursorMode.Idle:
                 {
-                    cross.gameObject.SetActive(true);
+                    crossIdle.gameObject.SetActive(true);
+                }
+                break;
+            case CursorMode.Highlight:
+                {
+                    crossHighlight.gameObject.SetActive(true);
                 }
                 break;
             case CursorMode.Clock:

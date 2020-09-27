@@ -9,19 +9,10 @@ using UnityEngine.Audio;
 
 using System.Text.RegularExpressions;
 
-[System.Serializable]
-public struct Zone
+public struct InventoryItem
 {
     public string id;
-    public GameObject prefab;
-}
-
-[System.Serializable]
-public struct Palette
-{
-    public string name;
-    public Color lightColor;
-    public Color darkColor;
+    public bool isNew;
 }
 
 public class GameManager : MonoBehaviour
@@ -44,6 +35,14 @@ public class GameManager : MonoBehaviour
     public AudioClip[] typewriterFX;
     public AudioMixerGroup typewriterMixerGroup;
 
+    public RectTransform inventoryPanel;
+    public TMPro.TextMeshProUGUI inventoryText;
+    public RectTransform inventoryButtonRect;
+    public RectTransform inventoryBagIcon;
+    public RectTransform inventoryBackIcon;
+    public RectTransform inventoryGlint;
+    public RectTransform glintPrefab;
+
     private Story m_story;
     private bool m_isAnimatingText = false;
     private string m_currentLocation = "";
@@ -63,9 +62,15 @@ public class GameManager : MonoBehaviour
         palettePostProcess.darkColor = Color.black;
     }
 
-    bool IsTimelinePlaying()
+    bool isTimelinePlaying()
     {
         return backgroundMask.state == PlayState.Playing && backgroundMask.time != backgroundMask.duration;
+    }
+
+    private void Awake()
+    {
+        m_inventory = new List<InventoryItem>();
+        m_inventoryGlints = new List<RectTransform>();
     }
 
     // Start is called before the first frame update
@@ -75,32 +80,65 @@ public class GameManager : MonoBehaviour
 
         textContainer.text = "";
 
-        cursor.SetMode(CursorMode.Cross);
+        cursor.setMode(CursorMode.Idle);
         cursor.choiceBox.setVisible(false);
 
         m_story = new Story(inkAsset.text);
+        m_story.ObserveVariable("inventory", (string _varName, object _newValue) =>
+        {
+            List<InventoryItem> newInventory = new List<InventoryItem>();
+            string[] inventory = _newValue.ToString().Split(',');
+            foreach (string str in inventory)
+            {
+                InventoryItem newItem = new InventoryItem();
+                newItem.id = str.Trim();
+                newItem.isNew = true;
+
+                if (newItem.id.Length == 0)
+                    continue;
+
+                foreach (InventoryItem item in m_inventory)
+                {
+                    if (item.id == newItem.id && !item.isNew)
+                    {
+                        newItem.isNew = false;
+                        break;
+                    }
+                }
+
+                newInventory.Add(newItem);
+            }
+            if (newInventory.Count > m_inventory.Count)
+            {
+                // PLAY AUDIO HINT
+            }
+            m_inventory = newInventory;
+            updateInventoryGling();
+        });
+
         Cursor.visible = false;
 
-        StartCoroutine(OnAdvanceStory());
+        StartCoroutine(onAdvanceStory());
     }
 
     // Update is called once per frame
     void Update()
     {
-        bool canInteract = !IsTimelinePlaying() && !m_isAnimatingText && m_story.currentChoices.Count > 0;
+        bool canInteract = !isTimelinePlaying() && !m_isAnimatingText && m_story.currentChoices.Count > 0;
 
         // CURSOR
         if (canInteract)
         {
-            cursor.SetMode(CursorMode.Cross);
+            cursor.setMode(CursorMode.Idle);
         }
         else
         {
-            cursor.SetMode(CursorMode.Clock);
+            cursor.setMode(CursorMode.Clock);
         }
 
         // CHECK WHICH ZONE IS HOVERED
         Choice hoveredChoice = null;
+        bool isHoveringInventoryButton = false;
         if (canInteract)
         {
             PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
@@ -116,7 +154,7 @@ public class GameManager : MonoBehaviour
                     foreach (Choice choice in m_story.currentChoices)
                     {
                         string zone;
-                        string text = StripTextFromZoneTag(choice.text, out zone);
+                        string text = stripTextFromZoneTag(choice.text, out zone);
 
                         if (zone == imageZone.id)
                         {
@@ -128,33 +166,46 @@ public class GameManager : MonoBehaviour
                     if (hoveredChoice != null)
                         break;
                 }
+
+                if (result.gameObject == inventoryButtonRect.gameObject)
+                {
+                    isHoveringInventoryButton = true;
+                }
             }
         }
 
         // MANAGE CHOICE INPUT & CHOICE BOX
+        cursor.choiceBox.setVisible(false);
         if (hoveredChoice)
         {
+            cursor.setMode(CursorMode.Highlight);
+
             string zone;
-            string text = StripTextFromZoneTag(hoveredChoice.text, out zone);
+            string text = stripTextFromZoneTag(hoveredChoice.text, out zone);
 
             cursor.choiceBox.setVisible(true);
             cursor.choiceBox.setText(text);
 
             if (Input.GetMouseButtonDown(0))
             {
+                setIventoryOpen(false);
                 textContainer.text = "";
                 m_story.ChooseChoiceIndex(hoveredChoice.index);
-                StartCoroutine(OnAdvanceStory());
+                StartCoroutine(onAdvanceStory());
                 return;
             }
         }
-        else
+        else if (isHoveringInventoryButton)
         {
-            cursor.choiceBox.setVisible(false);
+            cursor.setMode(CursorMode.Highlight);
+            if (Input.GetMouseButtonDown(0))
+            {
+                toggleInventory();
+            }
         }
 
         // SKIP
-        if (m_isAnimatingText && !IsTimelinePlaying())
+        if (m_isAnimatingText && !isTimelinePlaying())
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -164,7 +215,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    string StripTextFromZoneTag(string _text, out string _zone)
+    string stripTextFromZoneTag(string _text, out string _zone)
     {
         _zone = "";
 
@@ -177,13 +228,13 @@ public class GameManager : MonoBehaviour
         return r.Replace(_text, "").Trim();
     }
 
-    IEnumerator OnAdvanceStory()
+    IEnumerator onAdvanceStory()
     {
         m_isAnimatingText = true;
 
         while (m_story.canContinue)
         {
-            yield return StartCoroutine(SkippablePause(0.5f));
+            yield return StartCoroutine(skippablePause(0.5f));
 
             string line = m_story.Continue();
 
@@ -198,7 +249,7 @@ public class GameManager : MonoBehaviour
                     }
                     else if (split[0].Trim() == "location")
                     {
-                        yield return StartCoroutine(GoToLocation(split[1].Trim()));
+                        yield return StartCoroutine(goToLocation(split[1].Trim()));
                         yield return new WaitForSeconds(1.0f);
                     }
                 }
@@ -224,7 +275,7 @@ public class GameManager : MonoBehaviour
                         if (m_displayedCharacterCount % 4 == 0)
                         {
                             int soundId = Random.Range(0, typewriterFX.Length);
-                            SpawnAudioFX(typewriterFX[soundId], typewriterMixerGroup);
+                            spawnAudioFX(typewriterFX[soundId], typewriterMixerGroup);
                         }
 
                         ++m_displayedCharacterCount;
@@ -246,7 +297,7 @@ public class GameManager : MonoBehaviour
 
             textContainer.text = textContainer.text + "\n\n";
 
-            yield return StartCoroutine(SkippablePause(0.5f));
+            yield return StartCoroutine(skippablePause(0.5f));
             m_skipRequested = false;
         }
 
@@ -255,7 +306,7 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator GoToLocation(string _location)
+    IEnumerator goToLocation(string _location)
     {
         textContainer.text = "";
         if (_location == m_currentLocation)
@@ -267,7 +318,7 @@ public class GameManager : MonoBehaviour
             if (m_currentLocation != "")
             {
                 backgroundMask.Play(backgroundMaskHide, DirectorWrapMode.Hold);
-                yield return new WaitUntil(() => !IsTimelinePlaying());
+                yield return new WaitUntil(() => !isTimelinePlaying());
             }
             
             m_currentLocation = _location;
@@ -290,13 +341,13 @@ public class GameManager : MonoBehaviour
 
                 // Play animation
                 backgroundMask.Play(backgroundMaskReveal, DirectorWrapMode.Hold);
-                yield return new WaitUntil(() => !IsTimelinePlaying());
+                yield return new WaitUntil(() => !isTimelinePlaying());
             }
         }
         yield return null;
     }
 
-    IEnumerator SkippablePause(float _duration)
+    IEnumerator skippablePause(float _duration)
     {
         float pauseTimer = 0.0f;
         while (pauseTimer < _duration && !m_skipRequested)
@@ -307,7 +358,7 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    public AudioFXController SpawnAudioFX(AudioClip _clip, AudioMixerGroup _mixerGroup = null)
+    public AudioFXController spawnAudioFX(AudioClip _clip, AudioMixerGroup _mixerGroup = null)
     {
         AudioFXController controller = Instantiate<AudioFXController>(audioFXPrefab, Vector3.zero, Quaternion.identity);
         controller.audioSource.clip = _clip;
@@ -319,7 +370,86 @@ public class GameManager : MonoBehaviour
         return controller;
     }
 
+    void setIventoryOpen(bool _open)
+    {
+        if (_open == m_isInventoryOpen)
+            return;
+
+        if (_open)
+        {
+            inventoryBagIcon.gameObject.SetActive(false);
+            inventoryGlint.gameObject.SetActive(false);
+            inventoryBackIcon.gameObject.SetActive(true);
+            inventoryPanel.gameObject.SetActive(true);
+
+            if (m_inventory.Count == 0)
+            {
+                inventoryText.text = "Your bag is empty.";
+            }
+            else
+            {
+                string str = "";
+                for (int i = 0; i < m_inventory.Count; ++i)
+                {
+                    InventoryItem item = m_inventory[i];
+                    str += "- " + content.getItemDisplayName(item.id) + "\n";
+                    if (item.isNew)
+                    {
+                        RectTransform glint = Instantiate<RectTransform>(glintPrefab, inventoryText.rectTransform);
+                        glint.localPosition = new Vector3(5.0f, -6.0f + i * -18.0f, 0.0f);
+                        m_inventoryGlints.Add(glint);
+                    }
+                }
+                inventoryText.text = str;
+            }
+        }
+        else
+        {
+            inventoryBagIcon.gameObject.SetActive(true);
+            inventoryBackIcon.gameObject.SetActive(false);
+            inventoryPanel.gameObject.SetActive(false);
+            inventoryGlint.gameObject.SetActive(false);
+
+            for (int i = 0; i < m_inventory.Count; ++i)
+            {
+                InventoryItem item = m_inventory[i];
+                item.isNew = false;
+                m_inventory[i] = item;
+            }
+
+            foreach (RectTransform glint in m_inventoryGlints)
+            {
+                Destroy(glint.gameObject);
+            }
+            m_inventoryGlints.Clear();
+
+            updateInventoryGling();
+        }
+        m_isInventoryOpen = _open;
+    }
+    void toggleInventory()
+    {
+        setIventoryOpen(!m_isInventoryOpen);
+    }
+    void updateInventoryGling()
+    {
+        bool hasNew = false;
+        foreach (InventoryItem item in m_inventory)
+        {
+            if (item.isNew)
+            {
+                hasNew = true;
+                break;
+            }
+        }
+
+        inventoryGlint.gameObject.SetActive(hasNew);
+    }
+
     private int m_displayedCharacterCount = -1;
     private float m_characterTimer = 0.0f;
     private bool m_skipRequested = false;
+    private List<InventoryItem> m_inventory;
+    private List<RectTransform> m_inventoryGlints;
+    bool m_isInventoryOpen = false;
 }
