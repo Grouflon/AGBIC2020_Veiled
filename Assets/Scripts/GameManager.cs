@@ -238,6 +238,9 @@ public class GameManager : MonoBehaviour
 
             string line = m_story.Continue();
 
+            string nextPalette = "";
+            string nextVariant = "";
+            string nextLocation = "";
             foreach (string tag in m_story.currentTags)
             {
                 string[] split = tag.Split(':');
@@ -247,18 +250,32 @@ public class GameManager : MonoBehaviour
                     string value = split[1].Trim();
                     if (key == "palette")
                     {
-                        setPalette(value);
-                    }
-                    else if (key == "location")
-                    {
-                        yield return StartCoroutine(goToLocation(value));
-                        yield return new WaitForSeconds(1.0f);
+                        nextPalette = value;
                     }
                     else if (key == "variant")
                     {
-                        m_currentScreen.setVariant(value);
+                        nextVariant = value;
+                    }
+                    else if (key == "location")
+                    {
+                        nextLocation = value;
                     }
                 }
+            }
+
+            if (nextPalette.Length > 0)
+            {
+                setPalette(nextPalette);
+            }
+
+            if (nextLocation.Length > 0)
+            {
+                yield return StartCoroutine(goToLocation(nextLocation, nextVariant));
+                yield return new WaitForSeconds(1.0f);
+            }
+            else if (nextVariant.Length > 0)
+            {
+                m_currentScreen.setVariant(nextVariant);
             }
 
             m_characterTimer = 0.0f;
@@ -312,7 +329,7 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator goToLocation(string _location)
+    IEnumerator goToLocation(string _location, string _variant)
     {
         textContainer.text = "";
         if (_location == m_currentLocation)
@@ -347,6 +364,7 @@ public class GameManager : MonoBehaviour
 
                 // Play animation
                 backgroundMask.Play(backgroundMaskReveal, DirectorWrapMode.Hold);
+                m_currentScreen.setVariant(_variant);
                 yield return new WaitUntil(() => !isTimelinePlaying());
             }
         }

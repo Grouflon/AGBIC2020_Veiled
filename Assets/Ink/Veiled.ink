@@ -1,4 +1,4 @@
-LIST inventory = crowbar, shed_key, ladder, eyeball, attic_key
+LIST inventory = crowbar, ladder, eyeball, attic_key
 
 VAR checked_door_once = false
 VAR eye_visited_bathroom = false
@@ -14,6 +14,10 @@ VAR eye_fleeing_blob = false
 // interactions: back, right_door, left_door, bed, crucifix, bedside_table
 // variants : cross_down
 #location: Eye_Bedroom
+{
+  - eye_cross_down:
+    #variant: cross_down
+}
 Nice bedroom.
 -> choice
 = choice
@@ -123,6 +127,7 @@ Small room.
 
 + {can_open_door} [Use the key <door>]
   Unlocked.
+  ~ inventory -= (attic_key)
   -> Eye_Attic
 
 + [Back to the bathroom <back>]

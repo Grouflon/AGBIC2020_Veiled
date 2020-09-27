@@ -14,8 +14,7 @@ public class ScreenController : MonoBehaviour
     public RectTransform defaultImage;
     public ScreenVariant[] variants;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         defaultImage.gameObject.SetActive(true);
         foreach (ScreenVariant variant in variants)
@@ -24,7 +23,11 @@ public class ScreenController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+        
+    }
+
     void Update()
     {
         
