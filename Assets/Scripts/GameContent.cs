@@ -7,7 +7,7 @@ using UnityEngine;
 public struct Zone
 {
     public string id;
-    public GameObject prefab;
+    public ScreenController screenPrefab;
 }
 
 [System.Serializable]

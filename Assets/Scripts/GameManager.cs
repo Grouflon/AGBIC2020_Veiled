@@ -243,14 +243,20 @@ public class GameManager : MonoBehaviour
                 string[] split = tag.Split(':');
                 if (split.Length >= 2)
                 {
-                    if (split[0].Trim() == "palette")
+                    string key = split[0].Trim();
+                    string value = split[1].Trim();
+                    if (key == "palette")
                     {
-                        setPalette(split[1].Trim());
+                        setPalette(value);
                     }
-                    else if (split[0].Trim() == "location")
+                    else if (key == "location")
                     {
-                        yield return StartCoroutine(goToLocation(split[1].Trim()));
+                        yield return StartCoroutine(goToLocation(value));
                         yield return new WaitForSeconds(1.0f);
+                    }
+                    else if (key == "variant")
+                    {
+                        m_currentScreen.setVariant(value);
                     }
                 }
             }
@@ -334,7 +340,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (zone.id == m_currentLocation)
                     {
-                        Instantiate(zone.prefab, backgroundContainer);
+                        m_currentScreen = Instantiate(zone.screenPrefab, backgroundContainer);
                         break;
                     }
                 }
@@ -451,5 +457,6 @@ public class GameManager : MonoBehaviour
     private bool m_skipRequested = false;
     private List<InventoryItem> m_inventory;
     private List<RectTransform> m_inventoryGlints;
-    bool m_isInventoryOpen = false;
+    private ScreenController m_currentScreen;
+    private bool m_isInventoryOpen = false;
 }
