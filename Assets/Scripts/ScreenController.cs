@@ -9,10 +9,25 @@ public struct ScreenVariant
     public RectTransform transform;
 }
 
+[System.Serializable]
+public struct ScreenSequenceItem
+{
+    public string path;
+    public float delay;
+}
+
+[System.Serializable]
+public struct ScreenSequence
+{
+    public string name;
+    public ScreenSequenceItem[] sequence;
+}
+
 public class ScreenController : MonoBehaviour
 {
     public RectTransform defaultImage;
     public ScreenVariant[] variants;
+    public ScreenSequence[] sequences;
 
     private void Awake()
     {
@@ -56,5 +71,17 @@ public class ScreenController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public ScreenSequence getSequence(string _id)
+    {
+        foreach (ScreenSequence sequence in sequences)
+        {
+            if (_id == sequence.name)
+            {
+                return sequence;
+            }
+        }
+        return new ScreenSequence();
     }
 }

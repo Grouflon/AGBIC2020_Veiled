@@ -7,7 +7,10 @@ VAR eye_cross_down = false
 VAR eye_tried_cagibi_door = false
 VAR eye_fleeing_blob = false
 
-//->Frontyard
+/*// Chase debug
+~ inventory += (attic_key)
+-> Eye_Blob*/
+
 ->Eye_Bedroom
 
 === Eye_Bedroom ===
@@ -55,8 +58,14 @@ Everyone looks sad.
 
 === Eye_Bathroom ===
 // interactions: back, tub, door, sink
+// variants: Dark_01, Dark_02, Dark_03
+// sequences: Chased
 ~ eye_visited_bathroom = true
 #location: Eye_Bathroom
+{
+  - eye_fleeing_blob:
+    -> Chased
+}
 A dirty bathroom.
 -> choice
 = choice
@@ -86,6 +95,31 @@ A dirty bathroom.
   }
   -> Eye_Cagibi
 
+
+= Chased
+#sequence: Chased
+It is following you.
+->choice
+
+= Dark_01
+#variant: Dark_01
+It is coming closer.
+-> choice
+
+= Dark_02
+#variant: Dark_02
+Closer and closer.
+-> choice
+
+= Dark_03
+#variant: Dark_03
+Even closer.
+-> choice
+
+= Dead
+Too close, you are dead.
+-> end
+
 === Eye_Syringe
 // interactions: back, eyeball, syringe
 // variants: no_eye
@@ -109,8 +143,14 @@ Double Gross.
 
 === Eye_Cagibi ===
 // interactions: back, heater, door
+// variants: Dark_01, Dark_02, Dark_03
+// sequences: Chased
 ~ eye_visited_cagibi = true
 #location: Eye_Cagibi
+{
+  - eye_fleeing_blob:
+    -> Chased
+}
 Small room.
 -> choice
 = choice
@@ -139,12 +179,38 @@ Small room.
       -> Eye_Bathroom
   }
 
+= Chased
+#sequence: Chased
+It is following you.
+->choice
+
+= Dark_01
+#variant: Dark_01
+It is coming closer.
+-> choice
+
+= Dark_02
+#variant: Dark_02
+Closer and closer.
+-> choice
+
+= Dark_03
+#variant: Dark_03
+Even closer.
+-> choice
+
+= Dead
+Too close, you are dead.
+-> end
+
 === Eye_Blob
 // interactions: back, blob, key, door
+// variants: Blob_02, Blob_03
+// sequences: Spawning
 #location: Eye_Blob
 {
-  - eye_fleeing_blob:
-    #variant: bigger_blob
+  -inventory ? attic_key:
+    ->Blob_01
 }
 What is that thing?!
 -> choice
@@ -176,6 +242,26 @@ What is that thing?!
   }
   -> Eye_Bathroom
 
+= Blob_01
+~ eye_fleeing_blob = true
+#sequence: Spawning
+It seems to be growing
+-> choice
+
+= Blob_02
+#variant: Blob_02
+It's coming at you
+-> choice
+
+= Blob_03
+#variant: Blob_03
+You can almost feel its grasp
+-> choice
+
+= Dead
+It grabbed you, you are dead
+-> end
+
 === Eye_Blob_Key
 // interactions: back, key
 #location: Eye_Blob_Key
@@ -185,7 +271,6 @@ A key emerges from the pool of black blood.
   ~ inventory += (attic_key)
   #variant: no_key
   You hear a very loud noise. The thing is waking up.
-  ~ eye_fleeing_blob = true
   -> Eye_Blob
 
 + [Back to the bedroom <back>]
@@ -195,6 +280,8 @@ A key emerges from the pool of black blood.
 // interactions: switch, skeleton, sign, hole
 // variants: lit
 #location: Eye_Attic
+~ inventory -= (attic_key)
+You lock the door behind you, hoping that it will keep the hideous thing away.
 It is dark in here.
 -> dark
 = dark

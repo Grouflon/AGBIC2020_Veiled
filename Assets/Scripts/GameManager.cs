@@ -124,10 +124,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool canInteract = !isTimelinePlaying() && !m_isAnimatingText && m_story.currentChoices.Count > 0;
+        m_canInteract = !isTimelinePlaying() && !m_isAnimatingText && m_story.currentChoices.Count > 0;
 
         // CURSOR
-        if (canInteract)
+        if (m_canInteract)
         {
             cursor.setMode(CursorMode.Idle);
         }
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         // CHECK WHICH ZONE IS HOVERED
         Choice hoveredChoice = null;
         bool isHoveringInventoryButton = false;
-        if (canInteract)
+        if (m_canInteract)
         {
             PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
             pointerEventData.position = Input.mousePosition;
@@ -241,6 +241,7 @@ public class GameManager : MonoBehaviour
             string nextPalette = "";
             string nextVariant = "";
             string nextLocation = "";
+            string nextSequence = "";
             foreach (string tag in m_story.currentTags)
             {
                 string[] split = tag.Split(':');
@@ -260,6 +261,10 @@ public class GameManager : MonoBehaviour
                     {
                         nextLocation = value;
                     }
+                    else if (key == "sequence")
+                    {
+                        nextSequence = value;
+                    }
                 }
             }
 
@@ -276,6 +281,11 @@ public class GameManager : MonoBehaviour
             else if (nextVariant.Length > 0)
             {
                 m_currentScreen.setVariant(nextVariant);
+            }
+
+            if (nextSequence.Length > 0)
+            {
+                StartCoroutine(playSequence(m_currentScreen.getSequence(nextSequence)));
             }
 
             m_characterTimer = 0.0f;
@@ -382,6 +392,32 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator playSequence(ScreenSequence _sequence)
+    {
+        ScreenController currentScreen = m_currentScreen;
+
+        for (int i = 0; i < _sequence.sequence.Length; ++i)
+        {
+            float timer = 0.0f;
+            while((timer < _sequence.sequence[i].delay && m_currentScreen == currentScreen) || !m_canInteract)
+            {
+                if (m_canInteract)
+                {
+                    timer += Time.deltaTime;
+                }
+                yield return new WaitForEndOfFrame();
+            }
+
+            if (m_currentScreen != currentScreen)
+                break;
+
+            m_story.ChoosePathString(_sequence.sequence[i].path);
+            textContainer.text = "";
+            yield return StartCoroutine(onAdvanceStory());
+        }
+        yield return null;
+    }
+
     public AudioFXController spawnAudioFX(AudioClip _clip, AudioMixerGroup _mixerGroup = null)
     {
         AudioFXController controller = Instantiate<AudioFXController>(audioFXPrefab, Vector3.zero, Quaternion.identity);
@@ -477,4 +513,5 @@ public class GameManager : MonoBehaviour
     private List<RectTransform> m_inventoryGlints;
     private ScreenController m_currentScreen;
     private bool m_isInventoryOpen = false;
+    private bool m_canInteract = false;
 }
