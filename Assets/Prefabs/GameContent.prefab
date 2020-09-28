@@ -107,6 +107,9 @@ MonoBehaviour:
   - id: Eye_Blob_Key
     screenPrefab: {fileID: 5139841602407756024, guid: ecfbe1c689d74904b870cc8f078eae11,
       type: 3}
+  - id: Finger_Bottom
+    screenPrefab: {fileID: 5139841602407756024, guid: 54a70bddf2a087b43ae689e39108bde8,
+      type: 3}
   items:
   - id: eyeball
     displayText: Severed Eyeball

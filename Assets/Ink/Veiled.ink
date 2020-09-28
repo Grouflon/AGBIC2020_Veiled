@@ -10,13 +10,13 @@ LIST inventory = crowbar, ladder, eyeball, attic_key, cissors, finger
 /*// Debug Eye Bedroom
 ->Eye_Bedroom*/
 
-//-> Hall_TopDown
 -> Intro_Car_Driving
 
 INCLUDE Intro.ink
 INCLUDE Exterior.ink
 INCLUDE Hall.ink
 INCLUDE Eye.ink
+INCLUDE Finger.ink
 
 === end ===
 THE END!

@@ -300,4 +300,4 @@ It is dark in here.
 
 + [Slip through the hole <hole>]
   See you suckers.
-  -> end
+  -> Finger_Bottom

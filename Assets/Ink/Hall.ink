@@ -1,4 +1,3 @@
-VAR hall_left_door_open = false
 VAR hall_scanner_used = false
 VAR hall_scanner_inspected = false
 
@@ -18,13 +17,12 @@ You run after him.
 The house hall spreads in front of you.
 -> choice
 = choice
-+ {!hall_left_door_open} [Inspect the door <left_door>]
++ {!finger_hall_door_opened} [Inspect the door <left_door>]
   The door is locked from the other side.
   -> choice
 
-+ {hall_left_door_open} [Open the door <left_door>]
-  Not written yet.
-  -> choice
++ {finger_hall_door_opened} [Go through the door <left_door>]
+  -> Finger_Bottom
 
 + [Inspect the door <right_door>]
   The door is broken. You won't go any further this way.
@@ -59,8 +57,14 @@ This kind of technology feels out of place here.
   -> Hall_Main
 
 + {!can_use_scanner} [Inspect the device <device>]
-  Seems like some sort of biometric device.
-  Apparently it needs to scan your eye and your finger.
+  {
+    -inventory ? eyeball:
+      The eye is not enough to operate the device.
+      You also need a fingerprint.
+    -else:
+      Seems like some sort of biometric device.
+      Apparently it needs to scan your eye and your finger.
+  }
   -> choice
 
 + {can_use_scanner} [Use the eye and finger <device>]
@@ -75,16 +79,31 @@ This kind of technology feels out of place here.
 // interactions: stairs, left_door, front_door
 // variants: Slimed
 #location: Hall_FirstFloor
-A wide balcony.
+{
+  -eye_fleeing_blob:
+    #variant: Slimed
+    What a mess.
+  -else:
+    A wide balcony.
+}
 -> choice
 = choice
 + [Go down the stairs <stairs>]
   -> Hall_Main
 
-+ [Inspect the door <left_door>]
++ {!eye_fleeing_blob}[Inspect the door <left_door>]
   The door is locked from the other side.
   -> choice
 
-+ [Inspect the door <front_door>]
++ {!eye_fleeing_blob}[Inspect the door <front_door>]
   {The door opens|}
   -> Eye_Bedroom
+
++ {eye_fleeing_blob}[Inspect the door <left_door>]
+  The creature came from here.
+  You would rather not know what is inside.
+  -> choice
+
++ {eye_fleeing_blob}[Inspect the door <front_door>]
+  There is no way you are going back there.
+  -> choice
