@@ -1,4 +1,5 @@
 VAR intro_checked_gate = false
+VAR intro_checked_tools = false
 
 === Intro_Car_Driving ===
 // interactions: road
@@ -67,12 +68,20 @@ It is too high to climb over.
 
 + {can_open_gate}[Break the chain <gate>]
   #variant: Gate_Opened
+  ~ inventory -= (crowbar)
   It required some effort but the chain finally breaks.
   The gate is now open, you advance past it.
   -> Exterior_Front
 
-+ {!(inventory ? crowbar)}[Search the abandonned tools <tools>]
++ {!intro_checked_tools}[Search the abandonned tools <tools>]
+  ~ intro_checked_tools = true
+  Among the abandonned tools lies a big iron bar.
+  This may be useful to break the door open.
+  -> choice
+
++ {intro_checked_tools && !(inventory ? crowbar)}[Take the iron bar <tools>]
+  Seems sturdy enough.
   #variant: No_Bar
-  This big metal bar may be useful.
+  Not a very elegant tool but you need to get in there.
   ~ inventory += (crowbar)
   -> choice

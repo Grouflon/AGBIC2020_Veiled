@@ -3,6 +3,8 @@ VAR eye_visited_cagibi = false
 VAR eye_cross_down = false
 VAR eye_tried_cagibi_door = false
 VAR eye_fleeing_blob = false
+VAR eye_inspected_blob = false
+VAR eye_can_take = false
 
 === Eye_Bedroom ===
 // interactions: back, right_door, left_door, bed, crucifix, bedside_table
@@ -15,8 +17,8 @@ VAR eye_fleeing_blob = false
 Nice bedroom.
 -> choice
 = choice
-/*+ [Back to the corridor <back>]
-  -> Corridor*/
++ [Back to the corridor <back>]
+  -> Hall_FirstFloor
 
 + [Inspect the {eye_visited_bathroom:bathroom|room} <right_door>]
   You enter the room.
@@ -122,11 +124,16 @@ Double Gross.
   What is wrong with this place ?
   -> choice
 
-+ {!(inventory ? eyeball)}[Take the eyeball <eyeball>]
-  Why do I need this again ?
++ {!(inventory ? eyeball) && !hall_scanner_inspected} [Look at the eyeball <eyeball>]
+  There is no way I am touching this.
+  -> choice
+
++ {!(inventory ? eyeball) && hall_scanner_inspected}[Take the eyeball <eyeball>]
+  It may open the electric lock.
   ~ inventory += (eyeball)
   #variant: no_eye
-  You hear a loud tumbling noise coming from the bedroom behind
+  May god have mercy of your soul.
+  As you take the eye, you hear a loud tumbling noise coming from the bedroom behind.
   -> choice
 
 + [Back to the bathroom <back>]
@@ -195,7 +202,7 @@ Too close, you are dead.
 -> end
 
 === Eye_Blob
-// interactions: back, blob, key, door
+// interactions: back, blob, door
 // variants: Blob_02, Blob_03
 // sequences: Spawning
 #location: Eye_Blob
@@ -206,24 +213,24 @@ Too close, you are dead.
 What is that thing?!
 -> choice
 = choice
-+ [Approach the dark heap <blob>]
-  {
-    - eye_fleeing_blob:
-      It is growing and moving in my direction.
-      I need to get out of here.
-    - else:
-      Ho lord, I think it is still moving.
-      Something seems to be coming out of it.
-  }
-  -> choice
++ {!eye_inspected_blob} [??? <blob>]
+  ~ eye_inspected_blob = true
+  Ho lord, I think it is still moving.
+  Something seems to be coming out of it.
+  ->choice
 
-+ {!(inventory ? attic_key)}[Look at the tainted object <key>]
-  It seems like it came out of this thing
++ {eye_inspected_blob && !eye_fleeing_blob} [Approach the dark heap <blob>]
+  You step closer to the creature, trying to control your nausea.
   -> Eye_Blob_Key
+
++ {eye_fleeing_blob} [Look at the creature <blob>]
+  It is growing and moving in my direction.
+  I need to get out of here.
+  -> choice
 
 + [Go through the door <door>]
   It came out of there.
-  Going this way is out of the question.
+  Going this way is out of question.
   -> choice
 
 + [Back to the bathroom <back>]
