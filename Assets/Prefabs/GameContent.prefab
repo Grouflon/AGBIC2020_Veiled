@@ -44,6 +44,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zones:
+  - id: Intro_Car_Driving
+    screenPrefab: {fileID: 5139841602407756024, guid: 0d5af9b0083b219408d3b26254f2b905,
+      type: 3}
+  - id: Intro_Car_Parked
+    screenPrefab: {fileID: 5139841602407756024, guid: a1af36d9f5c03064796030921fd6911d,
+      type: 3}
+  - id: Intro_Forest
+    screenPrefab: {fileID: 5139841602407756024, guid: e4745a7dbe9c761449e537b11e6e28d7,
+      type: 3}
+  - id: Intro_Portail
+    screenPrefab: {fileID: 5139841602407756024, guid: 568d40862aea8c44b9c4e219c9e90b62,
+      type: 3}
+  - id: Exterior_Front
+    screenPrefab: {fileID: 5139841602407756024, guid: b52938aa36489b54caab679d8219ae96,
+      type: 3}
   - id: Eye_Bedroom
     screenPrefab: {fileID: 5139841602407756024, guid: 509395ddd4761c04a948e0eaea06e3e5,
       type: 3}
