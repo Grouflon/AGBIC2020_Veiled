@@ -59,6 +59,18 @@ MonoBehaviour:
   - id: Exterior_Front
     screenPrefab: {fileID: 5139841602407756024, guid: b52938aa36489b54caab679d8219ae96,
       type: 3}
+  - id: Exterior_Right
+    screenPrefab: {fileID: 5139841602407756024, guid: 41ea5d1b1578c5c4c9ea211838b89f2a,
+      type: 3}
+  - id: Exterior_Left
+    screenPrefab: {fileID: 5139841602407756024, guid: 4025d66866326bc4aa2db5bc5e5c582e,
+      type: 3}
+  - id: Exterior_Shed
+    screenPrefab: {fileID: 5139841602407756024, guid: 3a311106420cb024197e9b174c6848b6,
+      type: 3}
+  - id: Exterior_Back
+    screenPrefab: {fileID: 5139841602407756024, guid: b2e68155d80f02e49846fa15b5e48660,
+      type: 3}
   - id: Eye_Bedroom
     screenPrefab: {fileID: 5139841602407756024, guid: 509395ddd4761c04a948e0eaea06e3e5,
       type: 3}
@@ -88,6 +100,10 @@ MonoBehaviour:
     displayText: Severed Eyeball
   - id: attic_key
     displayText: Iron Key
+  - id: crowbar
+    displayText: Iron Bar
+  - id: ladder
+    displayText: Ladder
   palettes:
   - name: default
     lightColor: {r: 0.99607843, g: 0.9098039, b: 0.7490196, a: 1}
