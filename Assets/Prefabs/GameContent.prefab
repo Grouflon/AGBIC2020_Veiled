@@ -71,6 +71,18 @@ MonoBehaviour:
   - id: Exterior_Back
     screenPrefab: {fileID: 5139841602407756024, guid: b2e68155d80f02e49846fa15b5e48660,
       type: 3}
+  - id: Hall_TopDown
+    screenPrefab: {fileID: 5139841602407756024, guid: b82da1633feb2aa4bb39557a9d95cb1d,
+      type: 3}
+  - id: Hall_Main
+    screenPrefab: {fileID: 5139841602407756024, guid: 035864497ef1dc7459a76ca5e90e68a8,
+      type: 3}
+  - id: Hall_Scanner
+    screenPrefab: {fileID: 5139841602407756024, guid: 8d28f2e54c3fe2b45972ffdf35e3fa8a,
+      type: 3}
+  - id: Hall_FirstFloor
+    screenPrefab: {fileID: 5139841602407756024, guid: 57d39d499e7080a4abed0fe71da17465,
+      type: 3}
   - id: Eye_Bedroom
     screenPrefab: {fileID: 5139841602407756024, guid: 509395ddd4761c04a948e0eaea06e3e5,
       type: 3}

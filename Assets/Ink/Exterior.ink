@@ -152,4 +152,4 @@ The back of the house.
 
 + {exterior_used_ladder} [Climb the ladder <ladder>]
   You climb the ladder and enter the house.
-  -> end
+  -> Hall_TopDown
