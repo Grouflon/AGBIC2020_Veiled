@@ -110,6 +110,27 @@ MonoBehaviour:
   - id: Finger_Bottom
     screenPrefab: {fileID: 5139841602407756024, guid: 54a70bddf2a087b43ae689e39108bde8,
       type: 3}
+  - id: Finger_Stairs_Up
+    screenPrefab: {fileID: 5139841602407756024, guid: db8292813c3f5cf4b877981d6ce20e0e,
+      type: 3}
+  - id: Finger_Corridor_Up
+    screenPrefab: {fileID: 5139841602407756024, guid: 4615b8a39f7435649983f8a710c6097b,
+      type: 3}
+  - id: Finger_Bedroom_Far
+    screenPrefab: {fileID: 5139841602407756024, guid: 63c62a83e1f828a47b6e36aa4ea2d7e8,
+      type: 3}
+  - id: Finger_Bedroom_Close
+    screenPrefab: {fileID: 5139841602407756024, guid: bfa617c4cd77c504c832063c083772f2,
+      type: 3}
+  - id: Finger_Bathroom
+    screenPrefab: {fileID: 5139841602407756024, guid: 571b4b0fd49c24f4687f34994a2e8817,
+      type: 3}
+  - id: Finger_Tub
+    screenPrefab: {fileID: 5139841602407756024, guid: 37678c17964d69a46940346244c15c33,
+      type: 3}
+  - id: Finger_Hand
+    screenPrefab: {fileID: 5139841602407756024, guid: 1d3d9ee4979447949a8845119ec61191,
+      type: 3}
   items:
   - id: eyeball
     displayText: Severed Eyeball
@@ -119,6 +140,10 @@ MonoBehaviour:
     displayText: Iron Bar
   - id: ladder
     displayText: Ladder
+  - id: tarot
+    displayText: Tarot Card
+  - id: finger
+    displayText: Severed Finger
   palettes:
   - name: default
     lightColor: {r: 0.99607843, g: 0.9098039, b: 0.7490196, a: 1}

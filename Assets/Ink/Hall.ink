@@ -93,6 +93,7 @@ This kind of technology feels out of place here.
 
 + {!eye_fleeing_blob}[Inspect the door <left_door>]
   The door is locked from the other side.
+  You knock to the door but no one answers.
   -> choice
 
 + {!eye_fleeing_blob}[Inspect the door <front_door>]
