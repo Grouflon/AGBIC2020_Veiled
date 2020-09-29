@@ -8,13 +8,15 @@ public enum CursorMode
     None,
     Idle,
     Highlight,
-    Clock
+    Clock,
+    Skip,
 }
 
 public class CursorController : MonoBehaviour
 {
     public RectTransform crossIdle;
     public RectTransform crossHighlight;
+    public RectTransform crossSkip;
     public RectTransform clock;
     public ChoiceBoxController choiceBox;
 
@@ -92,6 +94,11 @@ public class CursorController : MonoBehaviour
                     clock.gameObject.SetActive(false);
                 }
                 break;
+            case CursorMode.Skip:
+                {
+                    crossSkip.gameObject.SetActive(false);
+                }
+                break;
             default:
                 break;
         }
@@ -113,6 +120,11 @@ public class CursorController : MonoBehaviour
             case CursorMode.Clock:
                 {
                     clock.gameObject.SetActive(true);
+                }
+                break;
+            case CursorMode.Skip:
+                {
+                    crossSkip.gameObject.SetActive(true);
                 }
                 break;
             default:

@@ -116,15 +116,14 @@ public class GameManager : MonoBehaviour
             updateInventoryGling();
         });
 
-        Cursor.visible = false;
-
-        StartCoroutine(onAdvanceStory());
+        StartCoroutine(startSequence());
     }
 
     // Update is called once per frame
     void Update()
     {
-        m_canInteract = !isTimelinePlaying() && !m_isAnimatingText && m_story.currentChoices.Count > 0;
+        Cursor.visible = false;
+        m_canInteract = !m_isInStartSequence && !m_isTransitioning && !m_isAnimatingText && m_story.currentChoices.Count > 0;
 
         // CURSOR
         if (m_canInteract)
@@ -133,7 +132,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            cursor.setMode(CursorMode.Clock);
+            if (!m_canSkip)
+            {
+                cursor.setMode(CursorMode.Clock);
+            }
+            else
+            {
+                cursor.setMode(CursorMode.Skip);
+            }
         }
 
         // CHECK WHICH ZONE IS HOVERED
@@ -205,7 +211,7 @@ public class GameManager : MonoBehaviour
         }
 
         // SKIP
-        if (m_isAnimatingText && !isTimelinePlaying())
+        if (m_canSkip)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -231,13 +237,14 @@ public class GameManager : MonoBehaviour
     IEnumerator onAdvanceStory()
     {
         m_isAnimatingText = true;
+        bool isFirstLine = true;
+        bool comeFromTransition = false;
 
         while (m_story.canContinue)
         {
-            yield return StartCoroutine(skippablePause(0.5f));
-
             string line = m_story.Continue();
 
+            // RESOLVE TAGS
             string nextPalette = "";
             string nextVariant = "";
             string nextLocation = "";
@@ -275,8 +282,13 @@ public class GameManager : MonoBehaviour
 
             if (nextLocation.Length > 0)
             {
+                if (textContainer.text.Length >= 3)
+                {
+                    textContainer.text = textContainer.text.Substring(0, textContainer.text.Length - 3);
+                }
                 yield return StartCoroutine(goToLocation(nextLocation, nextVariant));
-                yield return new WaitForSeconds(1.0f);
+                isFirstLine = true;
+                comeFromTransition = true;
             }
             else if (nextVariant.Length > 0)
             {
@@ -287,6 +299,28 @@ public class GameManager : MonoBehaviour
             {
                 StartCoroutine(playSequence(m_currentScreen.getSequence(nextSequence)));
             }
+
+            // DISPLAY TEXT
+            m_canSkip = true;
+
+            if (!isFirstLine)
+            {
+                while (!m_skipRequested)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+                textContainer.text = textContainer.text.Substring(0, textContainer.text.Length - 3);
+                textContainer.text = textContainer.text + "\n";
+                m_skipRequested = false;
+            }
+
+            if (!comeFromTransition && isFirstLine)
+            {
+                yield return StartCoroutine(skippablePause(0.5f));
+            }
+
+            isFirstLine = false;
+            comeFromTransition = false;
 
             m_characterTimer = 0.0f;
             m_displayedCharacterCount = 0;
@@ -327,12 +361,15 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+            textContainer.text = textContainer.text + "\n...";
 
-            textContainer.text = textContainer.text + "\n\n";
+            m_canSkip = false;
 
-            yield return StartCoroutine(skippablePause(0.5f));
-            m_skipRequested = false;
+            //yield return StartCoroutine(skippablePause(0.5f));
         }
+
+        textContainer.text = textContainer.text.Substring(0, textContainer.text.Length - 3);
+
 
         m_isAnimatingText = false;
         m_skipRequested = false;
@@ -341,13 +378,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator goToLocation(string _location, string _variant)
     {
-        textContainer.text = "";
+        m_isTransitioning = true;
         if (_location == m_currentLocation)
         {
-            yield return new WaitForSeconds(1.0f);
+            m_currentScreen.setVariant(_variant);
         }
         else
         {
+            yield return new WaitForSeconds(0.8f);
+
             if (m_currentLocation != "")
             {
                 backgroundMask.Play(backgroundMaskHide, DirectorWrapMode.Hold);
@@ -356,6 +395,7 @@ public class GameManager : MonoBehaviour
             
             m_currentLocation = _location;
             yield return new WaitForSeconds(1.0f);
+            textContainer.text = "";
 
             if (m_currentLocation != "")
             {
@@ -377,7 +417,9 @@ public class GameManager : MonoBehaviour
                 m_currentScreen.setVariant(_variant);
                 yield return new WaitUntil(() => !isTimelinePlaying());
             }
+            yield return new WaitForSeconds(1.0f);
         }
+        m_isTransitioning = false;
         yield return null;
     }
 
@@ -415,6 +457,17 @@ public class GameManager : MonoBehaviour
             textContainer.text = "";
             yield return StartCoroutine(onAdvanceStory());
         }
+        yield return null;
+    }
+
+    IEnumerator startSequence()
+    {
+        m_isInStartSequence = true;
+        yield return new WaitForSeconds(1.0f);
+        m_isInStartSequence = false;
+
+        StartCoroutine(onAdvanceStory());
+
         yield return null;
     }
 
@@ -514,4 +567,7 @@ public class GameManager : MonoBehaviour
     private ScreenController m_currentScreen;
     private bool m_isInventoryOpen = false;
     private bool m_canInteract = false;
+    private bool m_isTransitioning = false;
+    private bool m_isInStartSequence = false;
+    private bool m_canSkip = false;
 }
