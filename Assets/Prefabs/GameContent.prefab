@@ -137,6 +137,18 @@ MonoBehaviour:
   - id: Finger_Hand
     screenPrefab: {fileID: 5139841602407756024, guid: 1d3d9ee4979447949a8845119ec61191,
       type: 3}
+  - id: Kid
+    screenPrefab: {fileID: 5139841602407756024, guid: 02420984ac89833488c781605b749ab1,
+      type: 3}
+  - id: Kid_Frames
+    screenPrefab: {fileID: 5139841602407756024, guid: 7a796b34505fa2c429c5af5c3b368932,
+      type: 3}
+  - id: Kid_Hand
+    screenPrefab: {fileID: 5139841602407756024, guid: c38371cbb77ae3d409d7a34b60ebba13,
+      type: 3}
+  - id: Kid_Player
+    screenPrefab: {fileID: 5139841602407756024, guid: cf11050a1d07c8b44a630c8d02874b62,
+      type: 3}
   items:
   - id: eyeball
     displayText: Severed Eyeball

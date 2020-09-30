@@ -41,5 +41,9 @@ MonoBehaviour:
     inkAsset: {fileID: 102900000, guid: 0193c8f0c133e7547817788b984c0e26, type: 3}
     jsonAssetDirectory: {fileID: 0}
     jsonAsset: {fileID: 0}
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 0b254c488aa7ad94f9b13f2e5ba1edc3, type: 3}
+    jsonAssetDirectory: {fileID: 0}
+    jsonAsset: {fileID: 0}
   pendingCompilationStack: []
   compilationStack: []

@@ -11,14 +11,15 @@ LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, ta
 ->Eye_Bedroom*/
 
 /*-> Finger_Tub_Chase
-~ inventory += (tarot)
--> Finger_Bottom*/
+~ inventory += (tarot)*/
+//-> Finger_Bottom
 -> Intro_Car_Driving
 
 INCLUDE Intro.ink
 INCLUDE Exterior.ink
 INCLUDE Hall.ink
 INCLUDE Eye.ink
+INCLUDE Kid.ink
 INCLUDE Finger.ink
 
 === end ===

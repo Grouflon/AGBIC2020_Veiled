@@ -77,8 +77,7 @@ A long corridor spreads before you.
 
 + [Enter the room <right_door>]
   {!You slowly push the door and enter the room.}
-  //-> Kid_Curtain
-  -> choice
+  -> Kid
 
 + [Explore forward <front_door>]
   {!The corridor turns and opens up into a larger room.}

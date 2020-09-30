@@ -19,15 +19,24 @@ You run after him.
   -else:
     {!The person has disappeared through the door.}
 }
-The house hall spreads in front of you.
+{
+  -hall_scanner_used:
+    The door is now open.
+  -else:
+    The house hall spreads in front of you.
+}
 -> choice
 = choice
-+ {!finger_hall_door_opened} [Inspect the door <left_door>]
++ {!finger_octopus_appeared && !finger_hall_door_opened} [Inspect the door <left_door>]
   The door is locked from the other side.
   -> choice
 
-+ {finger_hall_door_opened} [Go through the door <left_door>]
++ {!finger_octopus_appeared && finger_hall_door_opened} [Go through the door <left_door>]
   -> Finger_Bottom
+
++ {finger_octopus_appeared} [Go through the door <left_door>]
+  The creature is surely still lurking behind. There is no way you are going back there.
+  -> choice
 
 + [Inspect the door <right_door>]
   The door is broken. You won't go any further this way.
