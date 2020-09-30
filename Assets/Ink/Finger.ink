@@ -4,6 +4,7 @@ VAR finger_inspected_door = false
 VAR finger_scissors_taken = false
 VAR finger_inspected_hand = false
 VAR finger_cut = false
+VAR finger_octopus_appeared = false
 
 === Finger_Bottom ===
 // interactions: door, hole, stairs
@@ -226,4 +227,205 @@ Its skin is dark and reminds you of the creature.
   #variant: Cut
   The blade cuts through the flesh easily.
   This is not the consistance of human flesh.
-  -> end
+  -> Finger_Tub_Chase
+
+// since there is no much choice it is simpler to duplicate the rooms and make new declarations for the whole chase
+=== Finger_Tub_Chase ===
+#location: Finger_Tub
+#variant: Blob_01
+The poor victim suddenly disappears inside the tub.
+-> choice
+= choice
++ {finger_octopus_appeared}[Back to the bathroom <back>]
+  -> Exit
+
++ {finger_octopus_appeared}[Back to the bathroom <back_2>]
+  You step back, paralized by fear.
+  -> Finger_Bathroom_Chase
+
++ {!finger_octopus_appeared}[Look inside the tub <whole_tub>]
+  Is she gone?
+  #variant: Blob_02
+  #sequence: Blob
+  ~ finger_octopus_appeared = true
+  A dark mass starts to grow and a tentacle emerges from the tub.
+  -> choice
+
++ {finger_octopus_appeared}[Look at the creature <whole_tub>]
+  What is that thing? You need to get out of here fast.
+  -> choice
+
+= Blob_03
+#variant: Blob_03
+Another tentacle burst out of the dark mass and swings at you. You dodged this one but may not be so lucky next time.
+-> choice
+
+= Exit
+You step back, paralized by fear.
+-> Finger_Bathroom_Chase
+
+=== Finger_Bathroom_Chase ===
+#location: Finger_Bathroom
+#variant: Blob_01
+#sequence: Blob
+It keeps coming out.
+Where is all this coming from?
+->choice
+= choice
++ [Look at the creature <tub>]
+  So scary.
+  -> choice
+
++ [Look in the mirror <mirror>]
+  This keeps coming out, how is this possible ?
+  -> choice
+
++ [Back to the room <back>]
+  You stumble out of the bathroom.
+  -> Finger_Bedroom_Chase
+
+= Blob_02
+#variant: Blob_02
+More tentacles.
+-> choice
+
+= Blob_03
+#variant: Blob_03
+Too much tentacles.
+-> choice
+
+= Dead
+It grabbed you, you're dead
+-> end
+
+=== Finger_Bedroom_Chase ===
+#location: Finger_Bedroom_Far
+#variant: Blob_01
+#sequence: Blob
+It knows you are here.
+It's coming after you now.
+-> choice
+= choice
++ [Rush to the corridor <back>]
+  You face back and start to run.
+  -> Finger_Corridor_Chase
+
++ [Look at the creature <door>]
+  So scary.
+  -> choice
+
+= Blob_02
+#variant: Blob_02
+More tentacles.
+-> choice
+
+= Blob_03
+#variant: Blob_03
+Too much tentacles.
+-> choice
+
+= Dead
+It grabbed you, you're dead
+-> end
+
+=== Finger_Corridor_Chase ===
+#location: Finger_Corridor_Down
+#sequence: Blob
+Is it still following you?
+-> choice
+= choice
++ [Back to the room <back>]
+  There is no way you are going back there.
+  -> choice
+
++ [Run to the stairs <stairs>]
+  Out of breath, you rush down the stairs.
+  -> Finger_Stairs_Down_Chase
+
+= Blob_01
+#variant: Blob_01
+It is still after you.
+-> choice
+
+= Blob_02
+#variant: Blob_02
+More tentacles.
+-> choice
+
+= Blob_03
+#variant: Blob_03
+Too much tentacles.
+-> choice
+
+= Dead
+It grabbed you, you're dead
+-> end
+
+=== Finger_Stairs_Down_Chase ===
+#location: Finger_Stairs_Down
+As you begin your descent, a tentacle grabs your feet.
+You lose balance and fall down the stairs.
+-> Finger_Stairs_Up_Chase
+
+=== Finger_Stairs_Up_Chase ===
+#location: Finger_Stairs_Up
+#variant: Blob_01
+#sequence: Blob
+It's coming after you.
+-> choice
+= choice
++ [Look at the creature <up>]
+  So Scary.
+  -> choice
+
+// Peut-être qu'on peut faire le relevage en 2 temps ?
++ [Stand up and run <back>]
+  You get back on your feet and run to the lounge.
+  -> Finger_Bottom_Chase
+
+= Blob_02
+#variant: Blob_02
+More tentacles.
+-> choice
+
+= Blob_03
+#variant: Blob_03
+Too much tentacles.
+-> choice
+
+= Dead
+It grabbed you, you're dead
+-> end
+
+=== Finger_Bottom_Chase ===
+#location: Finger_Bottom
+#variant: Blob_01
+#sequence: Blob
+You almost reached the hall.
+-> choice
+= choice
++ [Look at the creature <stairs>]
+  So scary.
+  -> choice
+
++ [Look at the hole <hole>]
+  Please, make that the other one won't pop out.
+  -> choice
+
++ [Flee to the hall <door>]
+  You boom inside the hall and shut the door behind you.
+  -> Hall_Main
+
+= Blob_02
+#variant: Blob_02
+More tentacles.
+-> choice
+
+= Blob_03
+#variant: Blob_03
+Too much tentacles.
+-> choice
+
+= Dead
+It grabbed you, you're dead
+-> end

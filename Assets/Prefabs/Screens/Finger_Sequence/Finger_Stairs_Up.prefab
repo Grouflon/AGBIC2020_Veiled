@@ -65,11 +65,11 @@ MonoBehaviour:
   sequences:
   - name: Blob
     sequence:
-    - path: Finger_Up_Chase.Blob_02
+    - path: Finger_Stairs_Up_Chase.Blob_02
       delay: 2
-    - path: Finger_Up_Chase.Blob_03
+    - path: Finger_Stairs_Up_Chase.Blob_03
       delay: 2
-    - path: Finger_Up_Chase.Dead
+    - path: Finger_Stairs_Up_Chase.Dead
       delay: 2
 --- !u!1 &86296950146629714
 GameObject:

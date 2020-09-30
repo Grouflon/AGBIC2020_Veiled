@@ -290,10 +290,6 @@ public class GameManager : MonoBehaviour
                 isFirstLine = true;
                 comeFromTransition = true;
             }
-            else if (nextVariant.Length > 0)
-            {
-                m_currentScreen.setVariant(nextVariant);
-            }
 
             if (nextSequence.Length > 0)
             {
@@ -312,6 +308,11 @@ public class GameManager : MonoBehaviour
                 textContainer.text = textContainer.text.Substring(0, textContainer.text.Length - 3);
                 textContainer.text = textContainer.text + "\n";
                 m_skipRequested = false;
+            }
+
+            if (nextVariant.Length > 0)
+            {
+                m_currentScreen.setVariant(nextVariant);
             }
 
             if (!comeFromTransition && isFirstLine)

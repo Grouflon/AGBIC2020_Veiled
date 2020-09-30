@@ -13,7 +13,12 @@ You run after him.
 === Hall_Main ===
 // left_door, right_door, lab_door, stairs
 #location: Hall_Main
-{!The person has disappeared through the door.}
+{
+  -finger_octopus_appeared:
+    {!You really hope it don't know how to open doors.}
+  -else:
+    {!The person has disappeared through the door.}
+}
 The house hall spreads in front of you.
 -> choice
 = choice
@@ -32,7 +37,7 @@ The house hall spreads in front of you.
   The door seems electronically locked. There is a small device besides it.
   -> Hall_Scanner
 
-+ {hall_scanner_used} [Rush through the door <lab_door>]
++ {hall_scanner_used} [Follow the man <lab_door>]
   Not written yet
   -> end
 
@@ -72,7 +77,7 @@ This kind of technology feels out of place here.
   Ho lord, what are you doing...
   #variant: Used
   Pressing the severed body parts onto the device seems to be putting the house in motion.
-  Suddenly the door opens.
+  You can hear sound of the lock opening.
   -> Hall_Main
 
 === Hall_FirstFloor ===

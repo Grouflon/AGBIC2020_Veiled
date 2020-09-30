@@ -113,8 +113,14 @@ MonoBehaviour:
   - id: Finger_Stairs_Up
     screenPrefab: {fileID: 5139841602407756024, guid: db8292813c3f5cf4b877981d6ce20e0e,
       type: 3}
+  - id: Finger_Stairs_Down
+    screenPrefab: {fileID: 5139841602407756024, guid: fbb4dd5cb4eee784d91831865a1c7cb5,
+      type: 3}
   - id: Finger_Corridor_Up
     screenPrefab: {fileID: 5139841602407756024, guid: 4615b8a39f7435649983f8a710c6097b,
+      type: 3}
+  - id: Finger_Corridor_Down
+    screenPrefab: {fileID: 5139841602407756024, guid: 3bfcb51132c0393468196c476998ed40,
       type: 3}
   - id: Finger_Bedroom_Far
     screenPrefab: {fileID: 5139841602407756024, guid: 63c62a83e1f828a47b6e36aa4ea2d7e8,

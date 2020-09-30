@@ -10,8 +10,9 @@ LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, ta
 /*// Debug Eye Bedroom
 ->Eye_Bedroom*/
 
-//~ inventory += (tarot)
-//-> Finger_Bottom
+/*-> Finger_Tub_Chase
+~ inventory += (tarot)
+-> Finger_Bottom*/
 -> Intro_Car_Driving
 
 INCLUDE Intro.ink
