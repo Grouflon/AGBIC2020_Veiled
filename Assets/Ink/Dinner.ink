@@ -50,7 +50,7 @@ Was someone expected?
 #location: Dinner_Buffet
 {
   - dinner_torn_photo:
-    #variant: No_Photo
+    #variant: Open
 
   - dinner_took_tape:
     #variant: No_Tape
