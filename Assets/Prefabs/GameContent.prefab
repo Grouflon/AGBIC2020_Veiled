@@ -83,6 +83,21 @@ MonoBehaviour:
   - id: Hall_FirstFloor
     screenPrefab: {fileID: 5139841602407756024, guid: 57d39d499e7080a4abed0fe71da17465,
       type: 3}
+  - id: Dinner_View01
+    screenPrefab: {fileID: 5139841602407756024, guid: fef6c0ef88b31164389cad4ee14137d2,
+      type: 3}
+  - id: Dinner_View02
+    screenPrefab: {fileID: 5139841602407756024, guid: 80f165501d6211a46bbacd83a717b4d6,
+      type: 3}
+  - id: Dinner_Buffet
+    screenPrefab: {fileID: 5139841602407756024, guid: 97c24ba790e0e4c47936c2873ca2f83a,
+      type: 3}
+  - id: Dinner_Plate
+    screenPrefab: {fileID: 5139841602407756024, guid: 261090b80f8ebd24b8e5877eff94e7e9,
+      type: 3}
+  - id: Dinner_Photo
+    screenPrefab: {fileID: 5139841602407756024, guid: 73d16fa5317b90440aea0e1cf965c49e,
+      type: 3}
   - id: Eye_Bedroom
     screenPrefab: {fileID: 5139841602407756024, guid: 509395ddd4761c04a948e0eaea06e3e5,
       type: 3}
@@ -162,6 +177,8 @@ MonoBehaviour:
     displayText: Tarot Card
   - id: finger
     displayText: Severed Finger
+  - id: tape
+    displayText: Tape
   palettes:
   - name: default
     lightColor: {r: 0.99607843, g: 0.9098039, b: 0.7490196, a: 1}

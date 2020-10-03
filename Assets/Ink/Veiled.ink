@@ -21,6 +21,7 @@ LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, ta
 INCLUDE Intro.ink
 INCLUDE Exterior.ink
 INCLUDE Hall.ink
+INCLUDE Dinner.ink
 INCLUDE Eye.ink
 INCLUDE Kid.ink
 INCLUDE Finger.ink

@@ -38,9 +38,9 @@ You run after him.
   The creature is surely still lurking behind. There is no way you are going back there.
   -> choice
 
-+ [Inspect the door <right_door>]
-  You grasp the handle. The door seem to weep as you push it open.
-  -> choice
++ [Open the door <right_door>]
+  {!You grasp the handle. The door seem to weep as you push it open.}
+  -> Dinner_View02
 
 + {!hall_scanner_used} [{Follow the man|Inspect the biometric lock} <lab_door>]
   You throw yourself at the door in vain.

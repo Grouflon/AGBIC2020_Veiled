@@ -103,7 +103,13 @@ What is it? A card?
 // interactions: back, player
 // variants: Tape
 #location: Kid_Player
-Your attention is caught by a toy tape player.
+{
+  - kid_used_tape:
+    #variant: Tape
+    The tape player is playing a song.
+  - else:
+    Your attention is caught by a toy tape player.
+}
 -> choice
 = choice
 ~ temp can_use_player = kid_player_inspected && (inventory ? tape)
@@ -115,7 +121,7 @@ Your attention is caught by a toy tape player.
   There is no tape in it.
   -> choice
 
-+ {!can_use_player && kid_used_tape}[Play the tape <player>]
++ {can_use_player && !kid_used_tape}[Play the tape <player>]
   #variant: Tape
   ~ kid_used_tape = true
   You insert the tape in the player and press play.

@@ -5,6 +5,7 @@ VAR eye_tried_cagibi_door = false
 VAR eye_fleeing_blob = false
 VAR eye_inspected_blob = false
 VAR eye_can_take = false
+VAR eye_inspected_hole = false
 
 === Eye_Bedroom ===
 // interactions: back, right_door, left_door, bed, crucifix, bedside_table
@@ -301,6 +302,12 @@ It is pitch blacj in there.
   And many days have passed apprently.
   -> light
 
-+ [Inspect the floor <hole>]
-  You kick the bare planks hard, enventually falling through. 
++ {!eye_inspected_hole} [Inspect the hole <hole>]
+  ~ eye_inspected_hole = true
+  There is hole in the ground.
+  You can see a room below.
+  -> light
+
++ {eye_inspected_hole} [Slip through the hole <hole>]
+  You drop yourself down to the room below.
   -> Finger_Bottom
