@@ -38,9 +38,9 @@ You run after him.
   The creature is surely still lurking behind. There is no way you are going back there.
   -> choice
 
-+ [Inspect the door <right_door>]
-  The door is broken. You won't go any further this way.
-  -> choice
++ [Open the door <right_door>]
+  {!You open the door and penetrate the room.}
+  -> Dinner_View01
 
 + {!hall_scanner_used} [{Follow the man|Inspect the electronic lock} <lab_door>]
   The door seems electronically locked. There is a small device besides it.
