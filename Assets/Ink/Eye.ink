@@ -5,6 +5,7 @@ VAR eye_tried_cagibi_door = false
 VAR eye_fleeing_blob = false
 VAR eye_inspected_blob = false
 VAR eye_can_take = false
+VAR eye_inspected_hole = false
 
 === Eye_Bedroom ===
 // interactions: back, right_door, left_door, bed, crucifix, bedside_table
@@ -298,6 +299,12 @@ It is dark in here.
   He or she was counting days.
   -> light
 
-+ [Slip through the hole <hole>]
-  See you suckers.
++ {!eye_inspected_hole} [Inspect the hole <hole>]
+  ~ eye_inspected_hole = true
+  There is hole in the ground.
+  You can see a room below.
+  -> light
+
++ {eye_inspected_hole} [Slip through the hole <hole>]
+  You drop yourself down to the room below.
   -> Finger_Bottom
