@@ -3,8 +3,6 @@
 
 LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, tarot
 
--> Hall_Main
-
 /*// Debug Chase
 ~ inventory += (attic_key)
 -> Eye_Blob*/

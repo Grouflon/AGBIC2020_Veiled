@@ -2,22 +2,24 @@ VAR dinner_inspected_photo = false
 VAR dinner_torn_photo = false
 VAR dinner_took_tape = false
 
-=== Dinner_View01 ===
-// interactions: back, table, front
-#location: Dinner_View01
+=== Dinner_View02 ===
+// interactions: back, shelf, table
+#location: Dinner_View02
 A classy dining room.
-The silverware has been set and the dinner is ready to be served.
+{!The silverware has been set and the dinner is ready to be served, but why all this decorum?}
+{!Was someone expected?}
 -> choice
 = choice
-+ [Back to the hall <back>]
++ [Bath to the hall <back>]
   -> Hall_Main
 
 + [Inspect the table <table>]
   Only one plate has been served.
   -> Dinner_Plate
 
-+ [To the back of the room <front>]
-  -> Dinner_View02
++ [Look at the buffet <shelf>]
+  {!You take a closer look at the frames on the buffet.}
+  -> Dinner_Buffet
 
 === Dinner_Plate ===
 // interactions: back, plate
@@ -26,34 +28,19 @@ Ew, french cuisine apparently.
 -> choice
 = choice
 + [Back to the room <back>]
-  -> Dinner_View01
+  -> Dinner_View02
 
 + [Inspect the plate <plate>]
   Yikes, no thanks!
   -> choice
 
-=== Dinner_View02 ===
-// interactions: back, shelf
-#location: Dinner_View02
-Why all the decorum?
-Was someone expected?
--> choice
-= choice
-+ [To the front of the room <back>]
-  -> Dinner_View01
-
-+ [Look at the buffet <shelf>]
-  {!You take a closer look at the frames on the buffet.}
-  -> Dinner_Buffet
-
 === Dinner_Buffet ===
 #location: Dinner_Buffet
 {
-  - dinner_torn_photo:
-    #variant: Open
-
   - dinner_took_tape:
     #variant: No_Tape
+  - dinner_torn_photo:
+    #variant: Open
 }
 A few family photos are on display on the buffet.
 -> choice
@@ -81,9 +68,11 @@ A few family photos are on display on the buffet.
   - dinner_torn_photo:
     #variant: Open
     A hidden case with a tape in it.
+
   - dinner_took_tape:
     #variant: No_Tape
     An empty hidden case.
+
   - else:
     A happy couple.
 }

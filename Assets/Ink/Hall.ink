@@ -40,7 +40,7 @@ You run after him.
 
 + [Open the door <right_door>]
   {!You open the door and penetrate the room.}
-  -> Dinner_View01
+  -> Dinner_View02
 
 + {!hall_scanner_used} [{Follow the man|Inspect the electronic lock} <lab_door>]
   The door seems electronically locked. There is a small device besides it.
