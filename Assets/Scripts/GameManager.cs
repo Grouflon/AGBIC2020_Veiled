@@ -249,6 +249,7 @@ public class GameManager : MonoBehaviour
             string nextVariant = "";
             string nextLocation = "";
             string nextSequence = "";
+            bool clear = false;
             foreach (string tag in m_story.currentTags)
             {
                 string[] split = tag.Split(':');
@@ -271,6 +272,10 @@ public class GameManager : MonoBehaviour
                     else if (key == "sequence")
                     {
                         nextSequence = value;
+                    }
+                    else if (key == "clear")
+                    {
+                        clear = true;
                     }
                 }
             }
@@ -308,6 +313,11 @@ public class GameManager : MonoBehaviour
                 textContainer.text = textContainer.text.Substring(0, textContainer.text.Length - 3);
                 textContainer.text = textContainer.text + "\n";
                 m_skipRequested = false;
+            }
+
+            if (clear)
+            {
+                textContainer.text = "";
             }
 
             if (nextVariant.Length > 0)

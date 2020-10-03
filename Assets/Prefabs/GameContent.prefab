@@ -164,6 +164,18 @@ MonoBehaviour:
   - id: Kid_Player
     screenPrefab: {fileID: 5139841602407756024, guid: cf11050a1d07c8b44a630c8d02874b62,
       type: 3}
+  - id: End_Stairs
+    screenPrefab: {fileID: 5139841602407756024, guid: 16fe6220484756b4ea23ef0bb70e0336,
+      type: 3}
+  - id: End_Corridor
+    screenPrefab: {fileID: 5139841602407756024, guid: e9a259c3344b5064ba716ae48b9db1ad,
+      type: 3}
+  - id: End_Room
+    screenPrefab: {fileID: 5139841602407756024, guid: 7e344a1e081df3a4a8065dac59533943,
+      type: 3}
+  - id: End_Mirror
+    screenPrefab: {fileID: 5139841602407756024, guid: 5c713807d1f7ac642bb55767822c0a34,
+      type: 3}
   items:
   - id: eyeball
     displayText: Severed Eyeball

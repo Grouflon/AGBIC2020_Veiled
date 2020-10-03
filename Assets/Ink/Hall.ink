@@ -1,4 +1,5 @@
 VAR hall_scanner_used = false
+VAR hall_scanner_seen = false
 VAR hall_scanner_inspected = false
 
 === Hall_TopDown ===
@@ -14,16 +15,16 @@ You run after him.
 // left_door, right_door, lab_door, stairs
 #location: Hall_Main
 {
+  -hall_scanner_used:
+    {!The result of using the scanners is a bit messy but it worked. You hear the door unlock.}
+    Nothing stands between the man and you now.
   -finger_octopus_appeared:
     {!You really hope it don't know how to open doors.}
-  -else:
-    {!The man has disappeared through the door.}
-}
-{
-  -hall_scanner_used:
-    The door is now open.
-  -else:
     You are in the main hall.
+  -hall_scanner_seen:
+    You are in the main hall.
+  -else:
+    The man has disappeared through the door in front of you.
 }
 -> choice
 = choice
@@ -42,13 +43,17 @@ You run after him.
   {!You grasp the handle. The door seem to weep as you push it open.}
   -> Dinner_View02
 
-+ {!hall_scanner_used} [{Follow the man|Inspect the biometric lock} <lab_door>]
++ {!hall_scanner_seen} [Follow the man <lab_door>]
   You throw yourself at the door in vain.
+  It is desperately shut, but as you inspect it, you find a strange contraption besides it.
+  -> Hall_Scanner
+
++ {hall_scanner_seen && !hall_scanner_used} [Inspect the biometric lock <lab_door>]
   -> Hall_Scanner
 
 + {hall_scanner_used} [Follow the man <lab_door>]
-  The result of using the scanners is a bit messy but it worked.
-  -> end
+  You dive into the passage that just opened.
+  -> End_Stairs
 
 + [Climb the stairs <stairs>]
   You may find some leads on the first floor.
@@ -62,8 +67,9 @@ You run after him.
   - hall_scanner_used:
     #variant: Used
 }
-~ hall_scanner_inspected = true
-You notice a small box besides it. This high tech device feels out of place here.
+~ hall_scanner_seen = true
+There is a small box besides the door.
+This high tech device feels out of place here.
 -> choice
 = choice
 ~ temp can_use_scanner = hall_scanner_inspected && (inventory ? eyeball) && (inventory ? finger)
@@ -72,10 +78,11 @@ You notice a small box besides it. This high tech device feels out of place here
 
 + {!can_use_scanner} [Inspect the device <device>]
   {
-    -inventory ? eyeball:
+    -hall_scanner_inspected && (inventory ? eyeball):
       The eye is not enough to operate the device.
       You also need a fingerprint.
     -else:
+      ~hall_scanner_inspected = true
       It seems like some sort of biometric device.
       Apparently it needs to scan your eye and your finger.
   }
@@ -85,9 +92,8 @@ You notice a small box besides it. This high tech device feels out of place here
   ~ hall_scanner_used = true
   Ho lord, what are you doing...
   #variant: Used
-  You press both eye and finger onto the scanner. 
+  You press both eye and finger onto the scanner.
   You squish them hard and you eventually get a reading.
-  You hear the door unlock.
   -> Hall_Main
 
 === Hall_FirstFloor ===
