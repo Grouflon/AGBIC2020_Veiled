@@ -14,14 +14,14 @@ VAR finger_octopus_appeared = false
   - finger_hall_door_opened:
     #variant: Open
 }
-{!You fall into a small chamber.}
-The small lounge continues up to a small staircase.
+{!You fall hard into and unknown room.}
+The small lounge seems to lead up to a steep staircase.
 -> choice
 = choice
 + {!finger_hall_door_opened} [Unlock the door <door>]
-  The lock is accessible from this side.
+  You notice the lock on the door was on. 
   #variant: Open
-  You open the door.
+  You unlock it and open the door.
   ~ finger_hall_door_opened = true
   -> choice
 
@@ -30,12 +30,12 @@ The small lounge continues up to a small staircase.
   -> Hall_Main
 
 + [Look at the hole <hole>]
-  You came from here.
+  That's where you came from.
   Let's hope the thing won't follow you.
   -> choice
 
 + [Climb up the stairs <stairs>]
-  {!You engage through the stairs.}
+  {!You cautiously start to climb. It's pretty steep}
   -> Finger_Stairs_Up
 
 === Finger_Stairs_Up ===
@@ -43,7 +43,7 @@ The small lounge continues up to a small staircase.
 // variant: Blob_01, Blob_02, Blob_03
 // sequences : Blob
 #location: Finger_Stairs_Up
-The stairs climb up to the first floor.
+The stairs leads up to the first floor.
 -> choice
 = choice
 + [Down the stairs <back>]
@@ -69,7 +69,8 @@ The stairs leads back to the lounge.
 // variant: Blob_01, Blob_02, Blob_03
 // sequences : Blob
 #location: Finger_Corridor_Up
-A long corridor spreads before you.
+A long corridor spreads before you. 
+You try to be quiet but the flooring is squeaky.
 -> choice
 = choice
 + [Back to the stairs <back>]
@@ -93,15 +94,15 @@ A long corridor spreads before you.
     #variant: Open
 }
 Strange room.
-It looks like a bedroom but all furnitures are gone.
+It looks like a bedroom but the main furniture are gone.
 -> choice
 = choice
 + [Back to the corridor <back>]
   -> Finger_Corridor_Up
 
 + [Examine the shelves <shelves>]
-  Lots of books complicated books about medecine, anatomy, history and so on.
-  The people living here must be quite educated.
+  And odd collection of mismatched books and artefact.
+  You pick one but can't decipher the language
   -> choice
 
 + [Inspect the door <door>]
@@ -117,7 +118,7 @@ It looks like a bedroom but all furnitures are gone.
     #variant: Open
     The door to the bathroom.
   - else:
-    A wooden sliding door.
+    A wooden sliding door. A beautiful mural is painted on it.
 }
 -> choice
 = choice
@@ -126,25 +127,25 @@ It looks like a bedroom but all furnitures are gone.
   -> Finger_Bedroom_Far
 
 + [Examine the trinket <trinket>]
-  A weird trinket.
+  It's a large sea shell with fragrant beads inside.
   -> choice
 
 + {!finger_bathroom_opened && !can_open_door}[Inspect the door <door>]
   ~ finger_inspected_door = true
-  The door seems loosely locked from the other side. You can distinguish the silouhette of the lock between the two doors.
-  Maybe you could unlock it with a thin object.
+  The door seems loosely locked from the other side. You can distinguish the silouhette of a simple latch between the two doors.
+  you could probably push it up with a thin object.
   -> choice
 
 + {!finger_bathroom_opened && can_open_door}[Lift the lock <door>]
   You insert the card between the two doors.
   ~ finger_bathroom_opened = true
   #variant: Open
-  After some fiddling, you finally manage to lift the lock and open the door.
-  A horrid stench coming from the room assault you.
+  You gently push the latch up and slide open the door.
+  You're immediatly seized by a strong acrid smell.
   -> choice
 
 + {finger_bathroom_opened} [Enter the room <door>]
-  The smell is unbearable but you have to press on.
+  The memory of the creature flash before your eyes but you have to press on.
   -> Finger_Bathroom
 
 === Finger_Bathroom ===
@@ -159,11 +160,11 @@ Something terrible happened here.
   -> Finger_Bedroom_Close
 
 + [Look at the mirror <mirror>]
-  There is something lying in the tub.
+  In the reflection, you see something lying in the tub.
   -> choice
 
 + [Inspect the tub <tub>]
-  You gather your mental strength and look at the tub.
+  You gather your mental strength and slowly peak at the tub.
   -> Finger_Tub
 
 === Finger_Tub ===
@@ -175,12 +176,13 @@ Something terrible happened here.
     #variant: No_Scissors
 }
 Someone is lying inside the tub, lifeless.
+Little bits of mold are floating in the placid blood
 -> choice
 = choice
 + [Back to the bathroom <back>]
   -> Finger_Bathroom
 
-+ [Examine the tub <tub>]
++ [Examine the body <tub>]
   Why did she do that?
   What is happening here?
   -> choice
@@ -191,6 +193,7 @@ What are you going to do with those scissors?
 ~ inventory += (scissors)
 ~ finger_scissors_taken = true
 You can't believe that you are thinking about this.
+This house starts to weight on you.
 -> choice
 
 + [Examine the hand <hand>]
@@ -205,8 +208,8 @@ You can't believe that you are thinking about this.
   -finger_cut:
     #variant: Cut
 }
-The hand of the dead person is hanging from the side of the tub.
-Its skin is dark and reminds you of the creature.
+The hand of the woman is hanging from the side of the tub.
+Despite bright red painted nails, the bloated skin is dark and reminds you of the creature.
 -> choice
 = choice
 ~ temp can_cut_finger = finger_inspected_hand && (inventory ? scissors)
@@ -225,14 +228,14 @@ Its skin is dark and reminds you of the creature.
   ~ finger_cut = true
   #variant: Cut
   The blade cuts through the flesh easily.
-  This is not the consistance of human flesh.
+  It feels like there wasn't any solid bones.
   -> Finger_Tub_Chase
 
 // since there is no much choice it is simpler to duplicate the rooms and make new declarations for the whole chase
 === Finger_Tub_Chase ===
 #location: Finger_Tub
 #variant: Blob_01
-The poor victim suddenly disappears inside the tub.
+You almost scream as the hand retracts and body disappears inside the tub.
 -> choice
 = choice
 + {finger_octopus_appeared}[Back to the bathroom <back>]
@@ -243,24 +246,24 @@ The poor victim suddenly disappears inside the tub.
   -> Finger_Bathroom_Chase
 
 + {!finger_octopus_appeared}[Look inside the tub <whole_tub>]
-  Is she gone?
+  You can't see anything through the crimson water
   #variant: Blob_02
   #sequence: Blob
   ~ finger_octopus_appeared = true
-  A dark mass starts to grow and a tentacle emerges from the tub.
+  Ripples sudently appear and a tentacle emerges from the tub.
   -> choice
 
 + {finger_octopus_appeared}[Look at the creature <whole_tub>]
-  What is that thing? You need to get out of here fast.
+  Your eyes widen in horror? You need to get out of here fast.
   -> choice
 
 = Blob_03
 #variant: Blob_03
-Another tentacle burst out of the dark mass and swings at you. You dodged this one but may not be so lucky next time.
+Another tentacle burst out of the dark mass and swinging erratically. You dodged this one but may not be so lucky next time.
 -> choice
 
 = Exit
-You step back, paralized by fear.
+You stumble back, paralized.
 -> Finger_Bathroom_Chase
 
 === Finger_Bathroom_Chase ===
@@ -272,7 +275,7 @@ Where is all this coming from?
 ->choice
 = choice
 + [Look at the creature <tub>]
-  So scary.
+  The stench is getting worse.
   -> choice
 
 + [Look in the mirror <mirror>]
@@ -280,21 +283,22 @@ Where is all this coming from?
   -> choice
 
 + [Back to the room <back>]
-  You stumble out of the bathroom.
+  You crawl out of the bathroom.
   -> Finger_Bedroom_Chase
 
 = Blob_02
 #variant: Blob_02
-More tentacles.
+Smaller tentacles joins the party
 -> choice
 
 = Blob_03
 #variant: Blob_03
-Too much tentacles.
+The large one is getting dangerously close
 -> choice
 
 = Dead
-It grabbed you, you're dead
+Unable to move as tremors seize you, you feel the cold touch of a tentacle wrapping around your head.
+The burst of pain knocks unconsious. Lucky for you, you won't hear the sound of your every bones crushing.
 -> end
 
 === Finger_Bedroom_Chase ===
@@ -310,27 +314,28 @@ It's coming after you now.
   -> Finger_Corridor_Chase
 
 + [Look at the creature <door>]
-  So scary.
+  adrenaline is racing in your veins.
   -> choice
 
 = Blob_02
 #variant: Blob_02
-More tentacles.
+how come it be so big!
 -> choice
 
 = Blob_03
 #variant: Blob_03
-Too much tentacles.
+That can't be real!
 -> choice
 
 = Dead
-It grabbed you, you're dead
+A large tentacly violentely know you against the wall.
+Head bleeding, unable to move the dark mass quickly overrun your body and crush you. 
 -> end
 
 === Finger_Corridor_Chase ===
 #location: Finger_Corridor_Down
 #sequence: Blob
-Is it still following you?
+Is it still coming?
 -> choice
 = choice
 + [Back to the room <back>]
@@ -343,38 +348,39 @@ Is it still following you?
 
 = Blob_01
 #variant: Blob_01
-It is still after you.
+It's getting more agile.
 -> choice
 
 = Blob_02
 #variant: Blob_02
-More tentacles.
+Tentacles creeps from everywhere
 -> choice
 
 = Blob_03
 #variant: Blob_03
-Too much tentacles.
+You feel some trying to grasp at your arm
 -> choice
 
 = Dead
-It grabbed you, you're dead
+you violently pulled backward. 
+A bright flash of light blinds you as your neck snaps under the grip of the monster. 
 -> end
 
 === Finger_Stairs_Down_Chase ===
 #location: Finger_Stairs_Down
-As you begin your descent, a tentacle grabs your feet.
-You lose balance and fall down the stairs.
+You throw yourself down but a tentacle grabs your feet.
+You lose balance and tumble down the stairs.
 -> Finger_Stairs_Up_Chase
 
 === Finger_Stairs_Up_Chase ===
 #location: Finger_Stairs_Up
 #variant: Blob_01
 #sequence: Blob
-It's coming after you.
+You feel dizzy.
 -> choice
 = choice
 + [Look at the creature <up>]
-  So Scary.
+  Oh lord.
   -> choice
 
 // Peut-être qu'on peut faire le relevage en 2 temps ?
@@ -384,16 +390,16 @@ It's coming after you.
 
 = Blob_02
 #variant: Blob_02
-More tentacles.
+Tentacles are sliding bewteen the railing bars.
 -> choice
 
 = Blob_03
 #variant: Blob_03
-Too much tentacles.
+Do something!
 -> choice
 
 = Dead
-It grabbed you, you're dead
+As the tentacles seized your legs, you see the body coming down, crushing you in it's way.
 -> end
 
 === Finger_Bottom_Chase ===
@@ -404,27 +410,30 @@ You almost reached the hall.
 -> choice
 = choice
 + [Look at the creature <stairs>]
-  So scary.
+  Quick!
   -> choice
 
 + [Look at the hole <hole>]
-  Please, make that the other one won't pop out.
+  Please, make that the other one won't show up. Not now.
   -> choice
 
 + [Flee to the hall <door>]
   You boom inside the hall and shut the door behind you.
+  You hear the creature crashing on the door. thankfully it doesn't hopen from this side.
   -> Hall_Main
 
 = Blob_02
 #variant: Blob_02
-More tentacles.
+Tentacles are bursting from everywhere
 -> choice
 
 = Blob_03
 #variant: Blob_03
-Too much tentacles.
+It's getting at the door!
 -> choice
 
 = Dead
-It grabbed you, you're dead
+The creature covers your only escape. 
+Helpless, you're quickly taken by this slimy embrace
+You pray every god know to man as you feel life leaving your body.
 -> end

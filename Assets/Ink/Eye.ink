@@ -14,7 +14,7 @@ VAR eye_can_take = false
   - eye_cross_down:
     #variant: cross_down
 }
-Nice bedroom.
+This bedroom is rather nice.
 -> choice
 = choice
 + [Back to the corridor <back>]
@@ -34,7 +34,7 @@ Nice bedroom.
 
 + {!eye_cross_down} [Inspect the crucifix <crucifix>]
   #variant: cross_down
-  It falls on the ground.
+  It falls on the ground. Bad omen.
   ~ eye_cross_down = true
   -> choice
 
@@ -74,7 +74,7 @@ A dirty bathroom.
   }
 
 + [Inspect the tub <tub>]
-  Gross.
+  The bottom of the tub is filled caked goo. Gross.
   -> choice
 
 + {!(inventory ? eyeball)} [Search the sink <sink>]
@@ -117,22 +117,23 @@ Too close, you are dead.
 // interactions: back, eyeball, syringe
 // variants: no_eye
 #location: Eye_Syringe
-Double Gross.
+Eww.
+As you try to repress a heave, you start to seriously question this place.
 -> choice
 = choice
 + [Inspect the syringe <syringe>]
-  What is wrong with this place ?
+  It's empty of its content
   -> choice
 
 + {!(inventory ? eyeball) && !hall_scanner_inspected} [Look at the eyeball <eyeball>]
-  There is no way I am touching this.
+  
   -> choice
 
 + {!(inventory ? eyeball) && hall_scanner_inspected}[Take the eyeball <eyeball>]
-  It may open the electric lock.
+  As gross as touching this eye is, it may work on the door scanner.
   ~ inventory += (eyeball)
   #variant: no_eye
-  May god have mercy of your soul.
+  It's still warm.
   As you take the eye, you hear a loud tumbling noise coming from the bedroom behind.
   -> choice
 
@@ -149,13 +150,13 @@ Double Gross.
   - eye_fleeing_blob:
     -> Chased
 }
-Small room.
+A Small storage room.
 -> choice
 = choice
 ~ temp can_open_door = eye_tried_cagibi_door && (inventory ? attic_key)
 
 + [Inspect the heater <heater>]
-  Hot!
+  The gentle heat feels comforting
   -> choice
 
 + {!can_open_door} [Open the door <door>]
@@ -210,13 +211,13 @@ Too close, you are dead.
   -inventory ? attic_key:
     ->Blob_01
 }
-What is that thing?!
+What is that thing?! The stench emanating from it makes you retch.
 -> choice
 = choice
 + {!eye_inspected_blob} [??? <blob>]
   ~ eye_inspected_blob = true
-  Ho lord, I think it is still moving.
-  Something seems to be coming out of it.
+  You get a closer look and notice its surface is slowly pulsing. Oh Lord!
+  Something is spurting from one of its pores.
   ->choice
 
 + {eye_inspected_blob && !eye_fleeing_blob} [Approach the dark heap <blob>]
@@ -224,13 +225,13 @@ What is that thing?!
   -> Eye_Blob_Key
 
 + {eye_fleeing_blob} [Look at the creature <blob>]
-  It is growing and moving in my direction.
-  I need to get out of here.
+  It is growing and moving in your direction.
+  You need to act fast
   -> choice
 
 + [Go through the door <door>]
-  It came out of there.
-  Going this way is out of question.
+  It came from the corridor.
+  Going back this way is out of question.
   -> choice
 
 + [Back to the bathroom <back>]
@@ -257,18 +258,19 @@ You can almost feel its grasp
 -> choice
 
 = Dead
-It grabbed you, you are dead
+You feel a warm wet touch clenching you arm. You are violently pulled backward. 
+you grasp for air but a hot sticky liquid fills your lungs. 
 -> end
 
 === Eye_Blob_Key
 // interactions: back, key
 #location: Eye_Blob_Key
-A key emerges from the pool of black blood.
+You realise it was a key emerging from the goo.
 + [Take the key <key>]
-  It is disgusting but you put the key in your bag
+  Trying not to touch the flesh, you grab the key with the tip of your fingers.
   ~ inventory += (attic_key)
   #variant: no_key
-  You hear a very loud noise. The thing is waking up.
+  You hear a very loud noise. It's waking up.
   -> Eye_Blob
 
 + [Back to the bedroom <back>]
@@ -280,24 +282,25 @@ A key emerges from the pool of black blood.
 #location: Eye_Attic
 ~ inventory -= (attic_key)
 You lock the door behind you, hoping that it will keep the hideous thing away.
-It is dark in here.
+It is pitch blacj in there.
 -> dark
 = dark
-+ [Activate the switch <switch>]
++ [Turn the light on <switch>]
   #variant: lit
   Everythings lights up.
-  Olala.
+  What you discover doesn't make you very hopeful.
   -> light
 
 = light
-+ [Touch the skeleton <skeleton>]
-  Hello you !
++ [Inspect the skeleton <skeleton>]
+  Skin has shrunk around the skinny bones. It's practically mummified
   -> light
 
 + [Read the scribblings <sign>]
-  He or she was counting days.
+  The occupant was counting days.
+  And many days have passed apprently.
   -> light
 
-+ [Slip through the hole <hole>]
-  See you suckers.
++ [Inspect the floor <hole>]
+  You kick the bare planks hard, enventually falling through. 
   -> Finger_Bottom

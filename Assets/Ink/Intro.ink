@@ -4,8 +4,8 @@ VAR intro_checked_tools = false
 === Intro_Car_Driving ===
 // interactions: road
 #location: Intro_Car_Driving
-You have been driving for as long as you can remember.
-You need his help to save your child.
+It has been one year since the accident. One endlessly long year looking for the truth.
+You know your child is alive. All the answers are out there. 
 -> choice
 = choice
 + [Continue driving <road>]
@@ -15,14 +15,13 @@ You need his help to save your child.
 === Intro_Car_Parked ===
 // interactions: car, forest
 #location: Intro_Car_Parked
-{!You finally arrive at the scientist estate.}
-You need to cross the forest.
+{!You finally arrive at the location you've been given.}
+Better keep a low profile and go trough the woods
 -> choice
 = choice
 + [Go back in the car <car>]
-You won't turn back.
-Not now.
-Not so close from your goal.
+You shudder at what you had to do to obtain this adress.
+No way you're backing out now
 -> choice
 
 + [Enter the forest <forest>]
@@ -32,7 +31,7 @@ You enter the forest.
 === Intro_Forest ===
 // interactions: back, trees, track
 #location: Intro_Forest
-A gloomy forest
+Ominous twisted trees watch you venture deeper into the woods
 -> choice
 = choice
 + [Back to the car <back>]
@@ -43,7 +42,7 @@ A gloomy forest
   -> Intro_Portail
 
 + [Look at the trees <trees>]
-  Creepy trees.
+  Everything look so quiet here. you shiver 
   -> choice
 
 
@@ -51,7 +50,7 @@ A gloomy forest
 // interactions: back, tools, gate
 // variants: no_bar, gate_opened
 #location: Intro_Portail
-The road is blocked by a big iron gate.
+The property is closed off by a large gate. 
 It is too high to climb over.
 ->choice
 = choice
@@ -63,25 +62,25 @@ It is too high to climb over.
 + {!can_open_gate}[Inspect the gate <gate>]
   ~ intro_checked_gate = true
   It is locked by an old rusty chain.
-  Maybe you can force it open with some kind of tool.
+  It has seen betters days, maybe there's a way to break it.
   -> choice
 
 + {can_open_gate}[Break the chain <gate>]
   #variant: Gate_Opened
   ~ inventory -= (crowbar)
-  It required some effort but the chain finally breaks.
-  The gate is now open, you advance past it.
+  You put all your weight on the bar. The chain finally surrenders.
+  The gate opens with a creaking noise, you enter the front yard.
   -> Exterior_Front
 
 + {!intro_checked_tools}[Search the abandonned tools <tools>]
   ~ intro_checked_tools = true
-  Among the abandonned tools lies a big iron bar.
-  This may be useful to break the door open.
+  Among the rusty tools lies a big iron bar.
+  This may be useful to break the chain.
   -> choice
 
 + {intro_checked_tools && !(inventory ? crowbar)}[Take the iron bar <tools>]
   Seems sturdy enough.
   #variant: No_Bar
-  Not a very elegant tool but you need to get in there.
+ Not very subtle but you need to get in there.
   ~ inventory += (crowbar)
   -> choice

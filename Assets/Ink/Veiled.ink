@@ -10,6 +10,9 @@ LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, ta
 /*// Debug Eye Bedroom
 ->Eye_Bedroom*/
 
+/*// eye
+->Eye_Bedroom
+
 /*-> Finger_Tub_Chase
 ~ inventory += (tarot)*/
 //-> Finger_Bottom

@@ -17,13 +17,13 @@ You run after him.
   -finger_octopus_appeared:
     {!You really hope it don't know how to open doors.}
   -else:
-    {!The person has disappeared through the door.}
+    {!The man has disappeared through the door.}
 }
 {
   -hall_scanner_used:
     The door is now open.
   -else:
-    The house hall spreads in front of you.
+    You are in the main hall.
 }
 -> choice
 = choice
@@ -39,15 +39,15 @@ You run after him.
   -> choice
 
 + [Inspect the door <right_door>]
-  The door is broken. You won't go any further this way.
+  You grasp the handle. The door seem to weep as you push it open.
   -> choice
 
-+ {!hall_scanner_used} [{Follow the man|Inspect the electronic lock} <lab_door>]
-  The door seems electronically locked. There is a small device besides it.
++ {!hall_scanner_used} [{Follow the man|Inspect the biometric lock} <lab_door>]
+  You throw yourself at the door in vain.
   -> Hall_Scanner
 
 + {hall_scanner_used} [Follow the man <lab_door>]
-  Not written yet
+  The result of using the scanners is a bit messy but it worked.
   -> end
 
 + [Climb the stairs <stairs>]
@@ -63,7 +63,7 @@ You run after him.
     #variant: Used
 }
 ~ hall_scanner_inspected = true
-This kind of technology feels out of place here.
+You notice a small box besides it. This high tech device feels out of place here.
 -> choice
 = choice
 ~ temp can_use_scanner = hall_scanner_inspected && (inventory ? eyeball) && (inventory ? finger)
@@ -76,7 +76,7 @@ This kind of technology feels out of place here.
       The eye is not enough to operate the device.
       You also need a fingerprint.
     -else:
-      Seems like some sort of biometric device.
+      It seems like some sort of biometric device.
       Apparently it needs to scan your eye and your finger.
   }
   -> choice
@@ -85,8 +85,9 @@ This kind of technology feels out of place here.
   ~ hall_scanner_used = true
   Ho lord, what are you doing...
   #variant: Used
-  Pressing the severed body parts onto the device seems to be putting the house in motion.
-  You can hear sound of the lock opening.
+  You press both eye and finger onto the scanner. 
+  You squish them hard and you eventually get a reading.
+  You hear the door unlock.
   -> Hall_Main
 
 === Hall_FirstFloor ===
@@ -98,7 +99,7 @@ This kind of technology feels out of place here.
     #variant: Slimed
     What a mess.
   -else:
-    A wide balcony.
+    What a stark constrast. The persian carpet on the floor feels rather nice but the ceiling however is falling off.
 }
 -> choice
 = choice
@@ -106,8 +107,8 @@ This kind of technology feels out of place here.
   -> Hall_Main
 
 + {!eye_fleeing_blob}[Inspect the door <left_door>]
-  The door is locked from the other side.
-  You knock to the door but no one answers.
+  The door is locked from the other side. You hear humming coming from the room.
+  You knock on the door but no one answers.
   -> choice
 
 + {!eye_fleeing_blob}[Inspect the door <front_door>]
