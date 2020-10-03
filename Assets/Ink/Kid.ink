@@ -36,18 +36,19 @@ VAR kid_used_tape = false
   -> choice
 
 + {kid_curtain_opened && !kid_down} [Take the kid down <curtain>]
-  You try to help the poor child, but you arrived too late.
+  With difficulty, you untie the rope on his ankle, but it's too late.
   #variant: Kid_Down
   ~ kid_down = true
   He is dead.
-  Who could have done that. Are there any clues on the body ?
+  Who could have done that. you start to weep, thinking at your own child?
   -> choice
 
 + {kid_down && !kid_melted} [Search the body <kid>]
-  His hand is clutched around something.
+  As you reach to close the child's eyes, you notice something in his hand.
   -> Kid_Hand
 
 + {kid_melted} [Look at the body <kid>]
+  You can't beleive what just happened!
   Poor kid.
   It breaks your heart.
   -> choice
@@ -68,7 +69,7 @@ VAR kid_used_tape = false
 #location: Kid
 #variant: Kid_Down
 ~ kid_melted = true
-What's happening?! His skin is burning!
+What's happening?! His skin is suddenly very hot!
 #sequence: Melt
 -> choice
 
@@ -96,7 +97,7 @@ What is it? A card?
   This is a tarot card.
   ~ inventory += (tarot)
   #variant: Card_Taken
-  "The hanged", how ironic.
+  "The hanged man", how ironic, is that a sick joke?
   -> Kid.Melt
 
 === Kid_Player ===
@@ -108,7 +109,7 @@ What is it? A card?
     #variant: Tape
     The tape player is playing a song.
   - else:
-    Your attention is caught by a toy tape player.
+    Your attention is caught by a toy cassette player.
 }
 -> choice
 = choice
@@ -124,19 +125,19 @@ What is it? A card?
 + {can_use_player && !kid_used_tape}[Play the tape <player>]
   #variant: Tape
   ~ kid_used_tape = true
-  You insert the tape in the player and press play.
-  A lullaby starts to play.
+  You insert the tape and press play.
+  A lullaby starts playing.
   Heartbreaking.
   -> choice
 
 === Kid_Frames ===
 #location: Kid_Frames
-A set of family photographs.
+A set of formal family photographs.
 -> choice
 = choice
 + [back to the roon <back>]
   -> Kid
 
 + [Inspect the frames <frames>]
-  Everyone looks sad.
+  Quadruplets! How unusual.
   -> choice

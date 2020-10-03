@@ -15,7 +15,7 @@ VAR eye_inspected_hole = false
   - eye_cross_down:
     #variant: cross_down
 }
-This bedroom is rather nice.
+This bedroom is rather cozy.
 -> choice
 = choice
 + [Back to the corridor <back>]
@@ -102,16 +102,17 @@ It is coming closer.
 
 = Dark_02
 #variant: Dark_02
-Closer and closer.
+What are you waiting for?
 -> choice
 
 = Dark_03
 #variant: Dark_03
-Even closer.
+You feel its wamrth on your neck.
 -> choice
 
 = Dead
-Too close, you are dead.
+You feel the flesh touching your. A chill fusing down your spine.
+The dread doesn't last long as the creature suck you in, thick tar like liquid filling your lungs
 -> end
 
 === Eye_Syringe
@@ -181,26 +182,27 @@ A Small storage room.
 
 = Chased
 #sequence: Chased
-It is following you.
+It is still coming!
 ->choice
 
 = Dark_01
 #variant: Dark_01
-It is coming closer.
+You hear it moan just behind you.
 -> choice
 
 = Dark_02
 #variant: Dark_02
-Closer and closer.
+Quick!
 -> choice
 
 = Dark_03
 #variant: Dark_03
-Even closer.
+It's touching your back
 -> choice
 
 = Dead
-Too close, you are dead.
+you jump forward to escape its grasp, falling onto the heater. You scream as you burn your face.
+A swift death relieves you from the pain as the creature crush you in the corner.
 -> end
 
 === Eye_Blob
@@ -217,8 +219,8 @@ What is that thing?! The stench emanating from it makes you retch.
 = choice
 + {!eye_inspected_blob} [??? <blob>]
   ~ eye_inspected_blob = true
-  You get a closer look and notice its surface is slowly pulsing. Oh Lord!
-  Something is spurting from one of its pores.
+  You get a closer look and notice its surface is slowly pulsing.
+  Oh Lord! Something is spurting from one of its pores.
   ->choice
 
 + {eye_inspected_blob && !eye_fleeing_blob} [Approach the dark heap <blob>]
@@ -283,18 +285,18 @@ You realise it was a key emerging from the goo.
 #location: Eye_Attic
 ~ inventory -= (attic_key)
 You lock the door behind you, hoping that it will keep the hideous thing away.
-It is pitch blacj in there.
+It is pitch black in there.
 -> dark
 = dark
 + [Turn the light on <switch>]
   #variant: lit
-  Everythings lights up.
+  The bright tube light hurts your eyes.
   What you discover doesn't make you very hopeful.
   -> light
 
 = light
 + [Inspect the skeleton <skeleton>]
-  Skin has shrunk around the skinny bones. It's practically mummified
+  The skin has shrunk around the skinny bones. It's practically mummified.
   -> light
 
 + [Read the scribblings <sign>]
@@ -302,12 +304,13 @@ It is pitch blacj in there.
   And many days have passed apprently.
   -> light
 
-+ {!eye_inspected_hole} [Inspect the hole <hole>]
++ {!eye_inspected_hole} [Inspect the floor <hole>]
   ~ eye_inspected_hole = true
-  There is hole in the ground.
+  Planks have been torn away. Look like the person here was making an escape.
   You can see a room below.
   -> light
 
-+ {eye_inspected_hole} [Slip through the hole <hole>]
-  You drop yourself down to the room below.
++ {eye_inspected_hole} [Try to break the floor <hole>]
+  You start kicking the remaining planks hard.
+  Their mouldy reamains break easily. you pass your head in the hole and slip.
   -> Finger_Bottom

@@ -81,6 +81,6 @@ It is too high to climb over.
 + {intro_checked_tools && !(inventory ? crowbar)}[Take the iron bar <tools>]
   Seems sturdy enough.
   #variant: No_Bar
- Not very subtle but you need to get in there.
+ Not very subtle but you need to get in.
   ~ inventory += (crowbar)
   -> choice

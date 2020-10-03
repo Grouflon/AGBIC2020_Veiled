@@ -42,18 +42,18 @@ Ew, french cuisine apparently.
   - dinner_torn_photo:
     #variant: Open
 }
-A few family photos are on display on the buffet.
+A few family photos are on display.
 -> choice
 = choice
 + [Back to the room <back>]
   ->Dinner_View02
 
 + [Look at the photo <big_frame>]
-  Predator smile.
+  The smile on man's face makes you uneasy.
   -> choice
 
 + [Look at the photo <small_frame>]
-  Smiling kid.
+  Smiling kid. Pretty uptight.
   -> choice
 
 + {!dinner_took_tape} [Look at the photo <tape_frame>]
@@ -74,7 +74,7 @@ A few family photos are on display on the buffet.
     An empty hidden case.
 
   - else:
-    A happy couple.
+    A happy couple. It's the same man that the other photograph, only much younger. 
 }
 -> choice
 = choice
@@ -91,7 +91,7 @@ A few family photos are on display on the buffet.
   ~ dinner_torn_photo = true
   You remove the photo from the frame.
   #variant: Open
-  You uncover a hidden case with a tape in it.
+  You uncover a hidden compartment with a tape in it.
   -> choice
 
 + {dinner_torn_photo && !dinner_took_tape} [Take the tape <photo>]

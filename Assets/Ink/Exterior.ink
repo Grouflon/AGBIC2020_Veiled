@@ -9,7 +9,7 @@ VAR exterior_visited_shed = false
 // interactions: statue, door, left, right
 #location: Exterior_Front
 This mansion, once opulent, looks rather abandonned
-A towering statue seem to watch over the proprety
+A towering statue seem to watch over the property
 -> choice
 = choice
 + [Knock on the door <door>]
@@ -18,8 +18,8 @@ A towering statue seem to watch over the proprety
   -> choice
 
 + [Examine the statue <statue>]
-  Strange spindly dark silouhettes.
-  They represent a familly but their alien look gives you chills. 
+  Strange slender dark silouhettes.
+  They represent a familly, but their alien look gives you chills. 
   -> choice
 
 + [Go around the right corner <right>]
@@ -55,7 +55,7 @@ The way to the back is blocked by a large empty ditch. It's not dry enough to cr
   -> choice
 
 + {exterior_seen_guy} [Examine the window <window>]
-  The strange figure has vanished. Did it really happen?
+  The strange figure has vanished. Was it really there in the first place?
   -> choice
 
 + [Examine the buildings <right>]

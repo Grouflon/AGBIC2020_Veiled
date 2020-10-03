@@ -259,7 +259,7 @@ You almost scream as the hand retracts and body disappears inside the tub.
 
 = Blob_03
 #variant: Blob_03
-Another tentacle burst out of the dark mass and swinging erratically. You dodged this one but may not be so lucky next time.
+Another tentacle burst out of the dark mass swinging erratically. You dodged this one but may not be so lucky next time.
 -> choice
 
 = Exit
@@ -319,7 +319,7 @@ It's coming after you now.
 
 = Blob_02
 #variant: Blob_02
-how come it be so big!
+how can it be so big!
 -> choice
 
 = Blob_03
@@ -328,8 +328,8 @@ That can't be real!
 -> choice
 
 = Dead
-A large tentacly violentely know you against the wall.
-Head bleeding, unable to move the dark mass quickly overrun your body and crush you. 
+A large tentacly violentely throw you against the wall.
+Head bleeding, you're unable to move. The dark mass reaches your body and crush you. 
 -> end
 
 === Finger_Corridor_Chase ===
