@@ -6,6 +6,7 @@ using UnityEngine.Playables;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 using System.Text.RegularExpressions;
 
@@ -42,6 +43,11 @@ public class GameManager : MonoBehaviour
     public RectTransform inventoryBackIcon;
     public RectTransform inventoryGlint;
     public RectTransform glintPrefab;
+
+    public RectTransform endPanel;
+    public TMPro.TextMeshProUGUI endText;
+    public ButtonController endTryAgainButton;
+    public ButtonController endBackToMenuButton;
 
     private Story m_story;
     private bool m_isAnimatingText = false;
@@ -145,6 +151,8 @@ public class GameManager : MonoBehaviour
         // CHECK WHICH ZONE IS HOVERED
         Choice hoveredChoice = null;
         bool isHoveringInventoryButton = false;
+        bool tryAgainHovered = false;
+        bool backToMenuHovered = false;
         if (m_canInteract)
         {
             PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
@@ -154,28 +162,43 @@ public class GameManager : MonoBehaviour
             EventSystem.current.RaycastAll(pointerEventData, raycastResults);
             foreach (RaycastResult result in raycastResults)
             {
-                ImageZoneController imageZone = result.gameObject.GetComponent<ImageZoneController>();
-                if (imageZone)
+                if (!m_isEnd)
                 {
-                    foreach (Choice choice in m_story.currentChoices)
+                    ImageZoneController imageZone = result.gameObject.GetComponent<ImageZoneController>();
+                    if (imageZone)
                     {
-                        string zone;
-                        string text = stripTextFromZoneTag(choice.text, out zone);
-
-                        if (zone == imageZone.id)
+                        foreach (Choice choice in m_story.currentChoices)
                         {
-                            hoveredChoice = choice;
-                            break;
+                            string zone;
+                            string text = stripTextFromZoneTag(choice.text, out zone);
+
+                            if (zone == imageZone.id)
+                            {
+                                hoveredChoice = choice;
+                                break;
+                            }
                         }
+
+                        if (hoveredChoice != null)
+                            break;
                     }
 
-                    if (hoveredChoice != null)
-                        break;
+                    if (result.gameObject == inventoryButtonRect.gameObject)
+                    {
+                        isHoveringInventoryButton = true;
+                    }
                 }
-
-                if (result.gameObject == inventoryButtonRect.gameObject)
+                else
                 {
-                    isHoveringInventoryButton = true;
+                    if (result.gameObject == endTryAgainButton.gameObject)
+                    {
+                        tryAgainHovered = true;
+                    }
+
+                    if (result.gameObject == endBackToMenuButton.gameObject)
+                    {
+                        backToMenuHovered = true;
+                    }
                 }
             }
         }
@@ -219,6 +242,34 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+
+        // END
+        if (m_isEnd && m_canInteract)
+        {
+            endTryAgainButton.setHovered(tryAgainHovered);
+            endBackToMenuButton.setHovered(backToMenuHovered);
+
+            if (m_isDead)
+            {
+                endTryAgainButton.gameObject.SetActive(true);
+            }
+            endBackToMenuButton.gameObject.SetActive(true);
+
+            if (tryAgainHovered && Input.GetMouseButtonDown(0))
+            {
+                StartCoroutine(tryAgainSequence());
+            }
+
+            if (backToMenuHovered && Input.GetMouseButtonDown(0))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
+        else
+        {
+            endTryAgainButton.setHovered(false);
+            endBackToMenuButton.setHovered(false);
+        }
     }
 
     string stripTextFromZoneTag(string _text, out string _zone)
@@ -240,6 +291,7 @@ public class GameManager : MonoBehaviour
         bool isFirstLine = true;
         bool comeFromTransition = false;
         setIventoryOpen(false);
+        TMPro.TextMeshProUGUI currentTextContainer = textContainer;
 
         while (m_story.canContinue)
         {
@@ -251,6 +303,8 @@ public class GameManager : MonoBehaviour
             string nextLocation = "";
             string nextSequence = "";
             bool clear = false;
+            bool isDead = false;
+            bool isEnd = false;
             foreach (string tag in m_story.currentTags)
             {
                 string[] split = tag.Split(':');
@@ -282,6 +336,14 @@ public class GameManager : MonoBehaviour
                     {
                         m_breakSequence = true;
                     }
+                    else if (key == "dead")
+                    {
+                        isDead = true;
+                    }
+                    else if (key == "end")
+                    {
+                        isEnd = true;
+                    }
                 }
             }
 
@@ -292,11 +354,23 @@ public class GameManager : MonoBehaviour
 
             if (nextLocation.Length > 0)
             {
-                if (textContainer.text.Length >= 3)
+                if (currentTextContainer.text.Length >= 3)
                 {
-                    textContainer.text = textContainer.text.Substring(0, textContainer.text.Length - 3);
+                    currentTextContainer.text = currentTextContainer.text.Substring(0, currentTextContainer.text.Length - 3);
                 }
                 yield return StartCoroutine(goToLocation(nextLocation, nextVariant));
+                isFirstLine = true;
+                comeFromTransition = true;
+            }
+
+            if (isDead || isEnd)
+            {
+                if (currentTextContainer.text.Length >= 3)
+                {
+                    currentTextContainer.text = currentTextContainer.text.Substring(0, currentTextContainer.text.Length - 3);
+                }
+                yield return StartCoroutine(endSequence(isDead));
+                currentTextContainer = endText;
                 isFirstLine = true;
                 comeFromTransition = true;
             }
@@ -304,6 +378,8 @@ public class GameManager : MonoBehaviour
             if (nextSequence.Length > 0)
             {
                 StartCoroutine(playSequence(m_currentScreen.getSequence(nextSequence)));
+                isFirstLine = true;
+                comeFromTransition = true;
             }
 
             // DISPLAY TEXT
@@ -315,14 +391,14 @@ public class GameManager : MonoBehaviour
                 {
                     yield return new WaitForEndOfFrame();
                 }
-                textContainer.text = textContainer.text.Substring(0, textContainer.text.Length - 3);
-                textContainer.text = textContainer.text + "\n";
+                currentTextContainer.text = currentTextContainer.text.Substring(0, currentTextContainer.text.Length - 3);
+                currentTextContainer.text = currentTextContainer.text + "\n";
                 m_skipRequested = false;
             }
 
             if (clear)
             {
-                textContainer.text = "";
+                currentTextContainer.text = "";
             }
 
             if (nextVariant.Length > 0)
@@ -343,7 +419,7 @@ public class GameManager : MonoBehaviour
 
             if (characterDisplayInterval <= 0.0f || m_skipRequested)
             {
-                textContainer.text = textContainer.text + line;
+                currentTextContainer.text = currentTextContainer.text + line;
             }
             else
             {
@@ -353,7 +429,7 @@ public class GameManager : MonoBehaviour
                     m_characterTimer += Time.deltaTime;
                     while (m_characterTimer >= nextCharacterDisplayInterval)
                     {
-                        textContainer.text = textContainer.text + line.Substring(m_displayedCharacterCount, 1);
+                        currentTextContainer.text = currentTextContainer.text + line.Substring(m_displayedCharacterCount, 1);
 
                         if (m_displayedCharacterCount % 4 == 0)
                         {
@@ -371,20 +447,20 @@ public class GameManager : MonoBehaviour
 
                     if (m_skipRequested)
                     {
-                        textContainer.text = textContainer.text + line.Substring(m_displayedCharacterCount, line.Length - m_displayedCharacterCount);
+                        currentTextContainer.text = currentTextContainer.text + line.Substring(m_displayedCharacterCount, line.Length - m_displayedCharacterCount);
                         m_skipRequested = false;
                         break;
                     }
                 }
             }
-            textContainer.text = textContainer.text + "\n...";
+            currentTextContainer.text = currentTextContainer.text + "\n...";
 
             m_canSkip = false;
 
             //yield return StartCoroutine(skippablePause(0.5f));
         }
 
-        textContainer.text = textContainer.text.Substring(0, textContainer.text.Length - 3);
+        currentTextContainer.text = currentTextContainer.text.Substring(0, currentTextContainer.text.Length - 3);
 
 
         m_isAnimatingText = false;
@@ -439,7 +515,49 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator skippablePause(float _duration)
+    IEnumerator endSequence(bool _isDead)
+    {
+        m_isTransitioning = true;
+        yield return new WaitForSeconds(0.8f);
+
+        if (m_currentLocation != "")
+        {
+            backgroundMask.Play(backgroundMaskHide, DirectorWrapMode.Hold);
+            yield return new WaitUntil(() => !isTimelinePlaying());
+        }
+
+        m_isEnd = true;
+        m_isDead = _isDead;
+        yield return new WaitForSeconds(1.0f);
+        textContainer.text = "";
+        endText.text = "";
+        m_currentLocation = "";
+        endPanel.gameObject.SetActive(true);
+        endTryAgainButton.gameObject.SetActive(false);
+        endBackToMenuButton.gameObject.SetActive(false);
+
+        for (int i = 0; i < backgroundContainer.childCount; ++i)
+        {
+            Destroy(backgroundContainer.GetChild(i).gameObject);
+        }
+        m_currentScreen = null;
+        yield return new WaitForSeconds(1.0f);
+
+        m_isTransitioning = false;
+        yield return null;
+    }
+
+    IEnumerator tryAgainSequence()
+    {
+        m_isEnd = false;
+        m_isDead = false;
+        m_story.ChooseChoiceIndex(0);
+        endPanel.gameObject.SetActive(false);
+        yield return StartCoroutine(startSequence());
+        yield return null;
+    }
+
+        IEnumerator skippablePause(float _duration)
     {
         float pauseTimer = 0.0f;
         while (pauseTimer < _duration && !m_skipRequested)
@@ -597,4 +715,6 @@ public class GameManager : MonoBehaviour
     private bool m_isInStartSequence = false;
     private bool m_canSkip = false;
     private bool m_breakSequence = false;
+    private bool m_isEnd = false;
+    private bool m_isDead = false;
 }

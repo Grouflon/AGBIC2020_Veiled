@@ -5,7 +5,7 @@ VAR intro_checked_tools = false
 // interactions: road
 #location: Intro_Car_Driving
 It has been one year since the accident. One endlessly long year looking for the truth.
-You know your child is alive. All the answers are out there. 
+You know your child is alive. All the answers are out there.
 -> choice
 = choice
 + [Continue driving <road>]
@@ -42,7 +42,7 @@ Ominous twisted trees watch you venture deeper into the woods
   -> Intro_Portail
 
 + [Look at the trees <trees>]
-  Everything look so quiet here. you shiver 
+  Everything look so quiet here. you shiver
   -> choice
 
 
@@ -50,7 +50,7 @@ Ominous twisted trees watch you venture deeper into the woods
 // interactions: back, tools, gate
 // variants: no_bar, gate_opened
 #location: Intro_Portail
-The property is closed off by a large gate. 
+The property is closed off by a large gate.
 It is too high to climb over.
 ->choice
 = choice

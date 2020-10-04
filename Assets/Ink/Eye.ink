@@ -111,9 +111,11 @@ You feel its wamrth on your neck.
 -> choice
 
 = Dead
-You feel the flesh touching your. A chill fusing down your spine.
-The dread doesn't last long as the creature suck you in, thick tar like liquid filling your lungs
--> end
+#dead:
+You feel the flesh touching your back. A chill fusing down your spine.
+The dread doesn't last long as the creature suck you in, thick tar like liquid filling your lungs.
++ [try again]
+  -> Eye_Try_Again
 
 === Eye_Syringe
 // interactions: back, eyeball, syringe
@@ -127,11 +129,11 @@ As you try to repress a heave, you start to seriously question this place.
   It's empty of its content
   -> choice
 
-+ {!(inventory ? eyeball) && !hall_scanner_inspected} [Look at the eyeball <eyeball>]
-  
++ {!(inventory ? eyeball) && !hall_scanner_seen} [Look at the eyeball <eyeball>]
+  There is no way you are touching this.
   -> choice
 
-+ {!(inventory ? eyeball) && hall_scanner_inspected}[Take the eyeball <eyeball>]
++ {!(inventory ? eyeball) && hall_scanner_seen}[Take the eyeball <eyeball>]
   As gross as touching this eye is, it may work on the door scanner.
   ~ inventory += (eyeball)
   #variant: no_eye
@@ -201,9 +203,11 @@ It's touching your back
 -> choice
 
 = Dead
-you jump forward to escape its grasp, falling onto the heater. You scream as you burn your face.
+#dead:
+You jump forward to escape its grasp, falling onto the heater. You scream as you burn your face.
 A swift death relieves you from the pain as the creature crush you in the corner.
--> end
++ [try again]
+  -> Eye_Try_Again
 
 === Eye_Blob
 // interactions: back, blob, door
@@ -214,7 +218,8 @@ A swift death relieves you from the pain as the creature crush you in the corner
   -inventory ? attic_key:
     ->Blob_01
 }
-What is that thing?! The stench emanating from it makes you retch.
+What is that thing?!
+The stench emanating from it makes you retch.
 -> choice
 = choice
 + {!eye_inspected_blob} [??? <blob>]
@@ -257,13 +262,15 @@ It's coming at you
 
 = Blob_03
 #variant: Blob_03
-You can almost feel its grasp
+You can almost feel its grasp.
 -> choice
 
 = Dead
-You feel a warm wet touch clenching you arm. You are violently pulled backward. 
-you grasp for air but a hot sticky liquid fills your lungs. 
--> end
+#dead:
+You feel a warm wet touch clenching you arm. You are violently pulled backward.
+You grasp for air but a hot sticky liquid fills your lungs.
++ [try again]
+  -> Eye_Try_Again
 
 === Eye_Blob_Key
 // interactions: back, key
@@ -314,3 +321,10 @@ It is pitch black in there.
   You start kicking the remaining planks hard.
   Their mouldy reamains break easily. you pass your head in the hole and slip.
   -> Finger_Bottom
+
+
+=== Eye_Try_Again ===
+~ eye_inspected_blob = false
+~ eye_fleeing_blob = false
+~ inventory -= (attic_key)
+-> Eye_Blob

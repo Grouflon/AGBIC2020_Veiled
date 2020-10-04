@@ -199,6 +199,8 @@ MonoBehaviour:
     displayText: Tape
   - id: syringe
     displayText: Syringe
+  - id: scissors
+    displayText: Scissors
   palettes:
   - name: default
     lightColor: {r: 0.99607843, g: 0.9098039, b: 0.7490196, a: 1}

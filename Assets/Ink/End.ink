@@ -146,4 +146,10 @@ That voice that you missed for so long now.
 And that sweet face.
 #clear:
 "Daddy..."
-->end
+#end:
+The end.
+Veiled.
+A game made for AGBIC 2020 by Rémi Bismuth & Nicolas Millot.
+Thank you for playing.
++ [try again]
+  -> end

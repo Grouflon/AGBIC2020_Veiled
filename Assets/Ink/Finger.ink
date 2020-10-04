@@ -19,14 +19,14 @@ The small lounge seems to lead up to a steep staircase.
 -> choice
 = choice
 + {!finger_hall_door_opened} [Unlock the door <door>]
-  You notice the lock on the door was on. 
+  You notice the lock on the door was on.
   #variant: Open
   You unlock it and open the door.
   ~ finger_hall_door_opened = true
   -> choice
 
 + {finger_hall_door_opened} [{Go through the door|Go to the hall} <door>]
-  {!It leads to the hall.}
+  {!It leads back to the hall.}
   -> Hall_Main
 
 + [Look at the hole <hole>]
@@ -69,7 +69,7 @@ The stairs leads back to the lounge.
 // variant: Blob_01, Blob_02, Blob_03
 // sequences : Blob
 #location: Finger_Corridor_Up
-A long corridor spreads before you. 
+A long corridor spreads before you.
 You try to be quiet but the flooring is squeaky.
 -> choice
 = choice
@@ -246,9 +246,9 @@ You almost scream as the hand retracts and body disappears inside the tub.
   -> Finger_Bathroom_Chase
 
 + {!finger_octopus_appeared}[Look inside the tub <whole_tub>]
+  #sequence: Blob
   You can't see anything through the crimson water
   #variant: Blob_02
-  #sequence: Blob
   ~ finger_octopus_appeared = true
   Ripples sudently appear and a tentacle emerges from the tub.
   -> choice
@@ -259,7 +259,8 @@ You almost scream as the hand retracts and body disappears inside the tub.
 
 = Blob_03
 #variant: Blob_03
-Another tentacle burst out of the dark mass swinging erratically. You dodged this one but may not be so lucky next time.
+Another tentacle burst out of the dark mass swinging erratically.
+You dodged this one but may not be so lucky next time.
 -> choice
 
 = Exit
@@ -288,18 +289,20 @@ Where is all this coming from?
 
 = Blob_02
 #variant: Blob_02
-Smaller tentacles joins the party
+Smaller tentacles joins the party.
 -> choice
 
 = Blob_03
 #variant: Blob_03
-The large one is getting dangerously close
+The large one is getting dangerously close.
 -> choice
 
 = Dead
+#dead:
 Unable to move as tremors seize you, you feel the cold touch of a tentacle wrapping around your head.
 The burst of pain knocks unconsious. Lucky for you, you won't hear the sound of your every bones crushing.
--> end
++ [try again]
+  -> Finger_Try_Again
 
 === Finger_Bedroom_Chase ===
 #location: Finger_Bedroom_Far
@@ -328,9 +331,11 @@ That can't be real!
 -> choice
 
 = Dead
-A large tentacly violentely throw you against the wall.
-Head bleeding, you're unable to move. The dark mass reaches your body and crush you. 
--> end
+#dead:
+A large tentacle violentely throw you against the wall.
+Head bleeding, you're unable to move. The dark mass reaches your body and crush you.
++ [try again]
+  -> Finger_Try_Again
 
 === Finger_Corridor_Chase ===
 #location: Finger_Corridor_Down
@@ -362,9 +367,11 @@ You feel some trying to grasp at your arm
 -> choice
 
 = Dead
-you violently pulled backward. 
-A bright flash of light blinds you as your neck snaps under the grip of the monster. 
--> end
+#dead:
+You are violently pulled backward.
+A bright flash of light blinds you as your neck snaps under the grip of the monster.
++ [try again]
+  -> Finger_Try_Again
 
 === Finger_Stairs_Down_Chase ===
 #location: Finger_Stairs_Down
@@ -399,8 +406,10 @@ Do something!
 -> choice
 
 = Dead
+#dead:
 As the tentacles seized your legs, you see the body coming down, crushing you in it's way.
--> end
++ [try again]
+  -> Finger_Try_Again
 
 === Finger_Bottom_Chase ===
 #location: Finger_Bottom
@@ -433,7 +442,16 @@ It's getting at the door!
 -> choice
 
 = Dead
-The creature covers your only escape. 
-Helpless, you're quickly taken by this slimy embrace
-You pray every god know to man as you feel life leaving your body.
--> end
+#dead:
+The creature covers your only escape.
+Helpless, you're quickly taken by its slimy embrace
+You pray every god known to man as you feel life leaving your body.
++ [try again]
+  -> Finger_Try_Again
+
+=== Finger_Try_Again ===
+~ inventory += (scissors)
+~ inventory -= (finger)
+~ finger_cut = false
+~ finger_octopus_appeared = false
+-> Finger_Hand
