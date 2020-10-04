@@ -239,6 +239,7 @@ public class GameManager : MonoBehaviour
         m_isAnimatingText = true;
         bool isFirstLine = true;
         bool comeFromTransition = false;
+        setIventoryOpen(false);
 
         while (m_story.canContinue)
         {
@@ -276,6 +277,10 @@ public class GameManager : MonoBehaviour
                     else if (key == "clear")
                     {
                         clear = true;
+                    }
+                    else if (key == "break_sequence")
+                    {
+                        m_breakSequence = true;
                     }
                 }
             }
@@ -448,18 +453,27 @@ public class GameManager : MonoBehaviour
     IEnumerator playSequence(ScreenSequence _sequence)
     {
         ScreenController currentScreen = m_currentScreen;
+        m_breakSequence = false;
 
         for (int i = 0; i < _sequence.sequence.Length; ++i)
         {
             float timer = 0.0f;
             while((timer < _sequence.sequence[i].delay && m_currentScreen == currentScreen) || !m_canInteract)
             {
+                if (m_breakSequence)
+                {
+                    break;
+                }
+
                 if (m_canInteract)
                 {
                     timer += Time.deltaTime;
                 }
                 yield return new WaitForEndOfFrame();
             }
+
+            if (m_breakSequence)
+                break;
 
             if (m_currentScreen != currentScreen)
                 break;
@@ -468,6 +482,7 @@ public class GameManager : MonoBehaviour
             textContainer.text = "";
             yield return StartCoroutine(onAdvanceStory());
         }
+        m_breakSequence = false;
         yield return null;
     }
 
@@ -581,4 +596,5 @@ public class GameManager : MonoBehaviour
     private bool m_isTransitioning = false;
     private bool m_isInStartSequence = false;
     private bool m_canSkip = false;
+    private bool m_breakSequence = false;
 }

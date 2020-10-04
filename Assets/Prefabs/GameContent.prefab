@@ -176,6 +176,12 @@ MonoBehaviour:
   - id: End_Mirror
     screenPrefab: {fileID: 5139841602407756024, guid: 5c713807d1f7ac642bb55767822c0a34,
       type: 3}
+  - id: End_Tray
+    screenPrefab: {fileID: 5139841602407756024, guid: c25069a71f3e36342a722ffd7b7bb4b0,
+      type: 3}
+  - id: End_Window
+    screenPrefab: {fileID: 5139841602407756024, guid: a969a35b4f4ffd74aaef19510f71ce63,
+      type: 3}
   items:
   - id: eyeball
     displayText: Severed Eyeball
@@ -191,6 +197,8 @@ MonoBehaviour:
     displayText: Severed Finger
   - id: tape
     displayText: Tape
+  - id: syringe
+    displayText: Syringe
   palettes:
   - name: default
     lightColor: {r: 0.99607843, g: 0.9098039, b: 0.7490196, a: 1}

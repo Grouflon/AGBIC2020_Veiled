@@ -1,7 +1,7 @@
 // https://github.com/inkle/ink/blob/master/Documentation/RunningYourInk.md
 // https://github.com/inkle/ink/blob/master/Documentation/WritingWithInk.md
 
-LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, tarot
+LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, tarot, syringe
 
 /*// Debug Chase
 ~ inventory += (attic_key)
@@ -22,7 +22,7 @@ LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, ta
 //~ inventory += (finger)
 //-> Hall_Main
 
-//->End_Stairs
+-> End_Room
 
 -> Intro_Car_Driving
 

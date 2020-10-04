@@ -1,3 +1,4 @@
+VAR end_recognized_child = false
 
 === End_Stairs ===
 // interactions: stairs
@@ -30,7 +31,7 @@ There is a single door at the end with light coming out of it.
 // sequences: wait
 #location: End_Room
 You hear the door lock behind you quickly after you enter.
-After a few moments, the silence is broken by the crackling voice of a speaker.
+After a few moments, the silence is broken by a crackling speaker sound.
 #clear:
 "Well, we were waiting for you sir."
 #sequence: Wait
@@ -58,6 +59,91 @@ After a few moments, the silence is broken by the crackling voice of a speaker.
 -> choice
 
 === End_Mirror ===
+// interactions: child
+// variants:
 #location: End_Mirror
-To be continued
--> end
+Another dark entity lies inert in the other room.
+You don't understand what is expected of you now.
+After a few moments of silence, the man's voice booms again.
+#clear:
+"A touching reunion, really."
+"I'd hate to interrupt, but unfortunately we need to go on with the procedure."
+"Would you mind having a closer look at our friend here?"
+-> choice
+= choice
++ {!end_recognized_child} [Look at the monster <child>]
+  You fight your instinctive disgust and try to focus your attention on the creature before you.
+  #variant: Stand_Up
+  Suddenly it starts to move and rise.
+  #clear:
+  Its shape looks strangely humanoid now.
+  Almost familiar.
+  You start to cry.
+  #clear:
+  "Okay that's enough, we both know what you are seeking here."
+  "I can fulfill your wish but you need to do one thing for me first."
+  "Check the tray on the board please."
+  ~ end_recognized_child = true
+  -> choice
+
++ {end_recognized_child} [Look at the tray <plate>]
+  ->End_Tray
+
+=== End_Tray ===
+// interactions: syringe
+// variants: No_Syringe, Hand_01, Hand_02, Hand_03, Hand_04
+// sequences: Do_It
+#location: End_Tray
+The saturated voice is more an more assertive.
+"You can be together again you know."
+"But before that I need you to administrate yourself my special treatment."
+-> choice
+= choice
++ {!(inventory ? syringe)} [Take the syringe <tray>]
+  As your will falters, you take the syringe in your hand.
+  #variant: No_Syringe
+  You can't stop the tears flowing down your face.
+  ~ inventory += (syringe)
+  #sequence: Do_It
+  #variant: Hand_01
+  What is going to happen if you do that?
+  -> choice
+
++ {(inventory ? syringe)} [Inject the treatment <hand>]
+  #break_sequence:
+  ~ inventory -= (syringe)
+  Your mind is broken, there is nothing you can do now.
+  You see yourself inserting the needle inside your arm and press the syringe.
+  #variant: Hand_02
+  #sequence: Injection
+  What now?.
+  -> No_Choice
+
+= No_Choice
++ [dummy]
+  ->No_Choice
+
+= Do_It
+"Do it now!" screams the voice.
+-> choice
+
+= Injected
+#variant: Hand_03
+Suddenly a tide of pain rush through your whole body.
+You can't move, you can't breathe and a nightmarish buzzing sound is filling your ears.
+#clear:
+As you feel your body stretch and change, everything becomes more and more distant.
+#variant: Hand_04
+Even the sound, even the pain is fading out, except for a small humming voice.
+->End_Window
+
+=== End_Window ===
+// variants: Daddy
+#location: End_Window
+As the suffering slowly fades, you start to remember.
+That voice that you missed for so long now.
+#variant: Daddy
+And that sweet face.
+#clear:
+"Daddy..."
+->end
