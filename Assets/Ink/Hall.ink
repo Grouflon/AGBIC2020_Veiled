@@ -118,7 +118,7 @@ This high tech device feels out of place here.
   -> choice
 
 + {!eye_fleeing_blob}[Inspect the door <front_door>]
-  {The door opens|}
+  {The door opens.|}
   -> Eye_Bedroom
 
 + {eye_fleeing_blob}[Inspect the door <left_door>]

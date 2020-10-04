@@ -14,7 +14,7 @@ VAR finger_octopus_appeared = false
   - finger_hall_door_opened:
     #variant: Open
 }
-{!You fall hard into and unknown room.}
+{!You fall hard into an unknown room.}
 The small lounge seems to lead up to a steep staircase.
 -> choice
 = choice

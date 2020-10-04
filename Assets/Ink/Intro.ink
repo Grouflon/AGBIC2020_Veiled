@@ -42,7 +42,7 @@ Ominous twisted trees watch you venture deeper into the woods
   -> Intro_Portail
 
 + [Look at the trees <trees>]
-  Everything look so quiet here. you shiver
+  Everything look so quiet here. You shiver.
   -> choice
 
 
@@ -62,13 +62,13 @@ It is too high to climb over.
 + {!can_open_gate}[Inspect the gate <gate>]
   ~ intro_checked_gate = true
   It is locked by an old rusty chain.
-  It has seen betters days, maybe there's a way to break it.
+  It has seen betters days, maybe there is a way to break it.
   -> choice
 
 + {can_open_gate}[Break the chain <gate>]
-  #variant: Gate_Opened
   ~ inventory -= (crowbar)
   You put all your weight on the bar. The chain finally surrenders.
+  #variant: Gate_Opened
   The gate opens with a creaking noise, you enter the front yard.
   -> Exterior_Front
 

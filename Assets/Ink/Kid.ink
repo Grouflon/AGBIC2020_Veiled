@@ -40,7 +40,7 @@ VAR kid_used_tape = false
   #variant: Kid_Down
   ~ kid_down = true
   He is dead.
-  Who could have done that. you start to weep, thinking at your own child?
+  Who could have done that. you start to weep, thinking about your own lost child.
   -> choice
 
 + {kid_down && !kid_melted} [Search the body <kid>]

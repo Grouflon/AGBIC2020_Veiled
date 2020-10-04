@@ -74,7 +74,7 @@ A few family photos are on display.
     An empty hidden case.
 
   - else:
-    A happy couple. It's the same man that the other photograph, only much younger. 
+    A happy couple. It's the same man that the other photograph, only much younger.
 }
 -> choice
 = choice
@@ -99,5 +99,5 @@ A few family photos are on display.
   #variant: No_Tape
   ~ dinner_took_tape = true
   ~ inventory += (tape)
-  "To Jean-Jacques" is written on the label.
+  "To my baby" is written on the label.
   -> choice

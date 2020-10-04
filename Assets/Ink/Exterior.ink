@@ -19,7 +19,7 @@ A towering statue seem to watch over the property
 
 + [Examine the statue <statue>]
   Strange slender dark silouhettes.
-  They represent a familly, but their alien look gives you chills. 
+  They represent a familly, but their alien look gives you chills.
   -> choice
 
 + [Go around the right corner <right>]
@@ -51,16 +51,17 @@ The way to the back is blocked by a large empty ditch. It's not dry enough to cr
   ~ exterior_seen_guy = true
   You can distinguish a ghostly figure through the window.
   # variant: No_Guy
-  You it call out to it but it suddenly fades away.
+  You call it out but it suddenly fades away.
   -> choice
 
 + {exterior_seen_guy} [Examine the window <window>]
-  The strange figure has vanished. Was it really there in the first place?
+  The strange figure has vanished.
+  Was it really there in the first place?
   -> choice
 
 + [Examine the buildings <right>]
   Crossing the ditch does not seem like a good idea.
-  You wouldn't want to get stuck
+  You wouldn't want to get stuck.
   -> choice
 
 === Exterior_Left ===
@@ -96,7 +97,8 @@ There is a shed on the left.
   - (inventory ? ladder) || exterior_used_ladder:
     #variant: No_Ladder
 }
-A thick layer of dust covers everything. Nothing has been touched in a long time.
+A thick layer of dust covers everything.
+Nothing has been touched in a long time.
 -> choice
 = choice
 + [Back to the alley <back>]

@@ -75,7 +75,7 @@ A dirty bathroom.
   }
 
 + [Inspect the tub <tub>]
-  The bottom of the tub is filled caked goo. Gross.
+  The bottom of the tub is filled with caked goo. Gross.
   -> choice
 
 + {!(inventory ? eyeball)} [Search the sink <sink>]
@@ -138,6 +138,7 @@ As you try to repress a heave, you start to seriously question this place.
   ~ inventory += (eyeball)
   #variant: no_eye
   It's still warm.
+  #clear:
   As you take the eye, you hear a loud tumbling noise coming from the bedroom behind.
   -> choice
 
@@ -165,11 +166,12 @@ A Small storage room.
 
 + {!can_open_door} [Open the door <door>]
   The small iron door is locked.
+  Maybe the key is there somewhere.
   ~ eye_tried_cagibi_door = true
   -> choice
 
 + {can_open_door} [Use the key <door>]
-  Unlocked.
+  You unlock the door with the key found on the creature.
   ~ inventory -= (attic_key)
   -> Eye_Attic
 
