@@ -79,13 +79,13 @@ A dirty bathroom.
   -> choice
 
 + {!(inventory ? eyeball)} [Search the sink <sink>]
-  You come closer to the sink
+  You come closer to the sink.
   -> Eye_Syringe
 
 + [Go through the door <door>]
   {
     - !eye_visited_cagibi:
-      What is on the other side ?
+      What is on the other side?
   }
   -> Eye_Cagibi
 
@@ -126,7 +126,7 @@ As you try to repress a heave, you start to seriously question this place.
 -> choice
 = choice
 + [Inspect the syringe <syringe>]
-  It's empty of its content
+  It's empty of its content.
   -> choice
 
 + {!(inventory ? eyeball) && !hall_scanner_seen} [Look at the eyeball <eyeball>]
@@ -161,7 +161,7 @@ A Small storage room.
 ~ temp can_open_door = eye_tried_cagibi_door && (inventory ? attic_key)
 
 + [Inspect the heater <heater>]
-  The gentle heat feels comforting
+  The gentle heat feels comforting.
   -> choice
 
 + {!can_open_door} [Open the door <door>]
@@ -201,7 +201,7 @@ Quick!
 
 = Dark_03
 #variant: Dark_03
-It's touching your back
+It's touching your back.
 -> choice
 
 = Dead
@@ -236,7 +236,7 @@ The stench emanating from it makes you retch.
 
 + {eye_fleeing_blob} [Look at the creature <blob>]
   It is growing and moving in your direction.
-  You need to act fast
+  You need to act fast.
   -> choice
 
 + [Go through the door <door>]
@@ -254,12 +254,12 @@ The stench emanating from it makes you retch.
 = Blob_01
 ~ eye_fleeing_blob = true
 #sequence: Spawning
-It seems to be growing
+It seems to be growing.
 -> choice
 
 = Blob_02
 #variant: Blob_02
-It's coming at you
+It's coming at you.
 -> choice
 
 = Blob_03

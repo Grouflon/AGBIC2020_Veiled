@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public float characterDisplayIntervalRandomDeviation = 0.01f;
 
     [Header("Internal")]
+    public RectTransform gameCanvas;
     public CursorController cursor;
     public TextAsset inkAsset;
     public TMPro.TextMeshProUGUI textContainer;
@@ -155,8 +156,10 @@ public class GameManager : MonoBehaviour
         bool backToMenuHovered = false;
         if (m_canInteract)
         {
+            float xMouseRatio = (Input.mousePosition.x - (Screen.width * 0.5f)) / gameCanvas.sizeDelta.x;
+            float yMouseRatio = (Input.mousePosition.y - (Screen.height * 0.5f)) / gameCanvas.sizeDelta.y;
             PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-            pointerEventData.position = Input.mousePosition;
+            pointerEventData.position = new Vector3(Mathf.Round((xMouseRatio + 0.5f) * 640.0f), Mathf.Round((yMouseRatio + 0.5f) * 360.0f));
 
             List<RaycastResult> raycastResults = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerEventData, raycastResults);

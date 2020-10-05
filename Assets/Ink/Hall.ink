@@ -7,7 +7,7 @@ VAR hall_scanner_inspected = false
 #location: Hall_TopDown
 As you enter, you see someone rushing through the door just below you.
 #variant: No_Guy
-Who was he ?
+Who was he?
 You run after him.
 -> Hall_Main
 
@@ -90,9 +90,11 @@ This high tech device feels out of place here.
 
 + {can_use_scanner} [Use the eye and finger <device>]
   ~ hall_scanner_used = true
-  Ho lord, what are you doing...
+  Ho lord, what are you doing?
   #variant: Used
   You press both eye and finger onto the scanner.
+  ~ inventory -= (eyeball)
+  ~ inventory -= (finger)
   You squish them hard and you eventually get a reading.
   -> Hall_Main
 

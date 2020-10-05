@@ -16,12 +16,12 @@ You know your child is alive. All the answers are out there.
 // interactions: car, forest
 #location: Intro_Car_Parked
 {!You finally arrive at the location you've been given.}
-Better keep a low profile and go trough the woods
+Better keep a low profile and go trough the woods.
 -> choice
 = choice
 + [Go back in the car <car>]
 You shudder at what you had to do to obtain this adress.
-No way you're backing out now
+No way you're backing out now.
 -> choice
 
 + [Enter the forest <forest>]
@@ -31,7 +31,7 @@ You enter the forest.
 === Intro_Forest ===
 // interactions: back, trees, track
 #location: Intro_Forest
-Ominous twisted trees watch you venture deeper into the woods
+Ominous twisted trees watch you venture deeper into the woods.
 -> choice
 = choice
 + [Back to the car <back>]
@@ -81,6 +81,6 @@ It is too high to climb over.
 + {intro_checked_tools && !(inventory ? crowbar)}[Take the iron bar <tools>]
   Seems sturdy enough.
   #variant: No_Bar
- Not very subtle but you need to get in.
+  Not very subtle but you need to get in.
   ~ inventory += (crowbar)
   -> choice

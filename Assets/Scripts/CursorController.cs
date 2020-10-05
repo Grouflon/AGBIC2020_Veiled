@@ -30,9 +30,15 @@ public class CursorController : MonoBehaviour
 
     private void Update()
     {
-        float xMouseRatio = Input.mousePosition.x / Screen.width;
-        float yMouseRatio = (Input.mousePosition.y - Screen.height) / Screen.height;
-        Vector3 cursorPosition = new Vector3(Mathf.Round((xMouseRatio - 0.5f) * 640.0f), Mathf.Round((yMouseRatio + 0.5f) * 360.0f), rectTransform.localPosition.z);
+        GameManager gm = FindObjectOfType<GameManager>();
+        float xMouseRatio = (Input.mousePosition.x - (Screen.width * 0.5f)) / gm.gameCanvas.sizeDelta.x;
+        float yMouseRatio = (Input.mousePosition.y - (Screen.height * 0.5f)) / gm.gameCanvas.sizeDelta.y;
+        Vector3 cursorPosition = new Vector3(Mathf.Round((xMouseRatio) * 1280.0f), Mathf.Round((yMouseRatio) * 720.0f), rectTransform.localPosition.z);
+        /*Vector3 cursorPosition = new Vector3(
+            Mathf.Round(Input.mousePosition.x * 0.5f) * 2.0f,
+            Mathf.Round(Input.mousePosition.y * 0.5f) * 2.0f,
+            rectTransform.localPosition.z
+        );*/
         rectTransform.localPosition = cursorPosition;
 
         // OFFSET CHOICE BOX

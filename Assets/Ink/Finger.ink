@@ -35,7 +35,7 @@ The small lounge seems to lead up to a steep staircase.
   -> choice
 
 + [Climb up the stairs <stairs>]
-  {!You cautiously start to climb. It's pretty steep}
+  {!You cautiously start to climb. It's pretty steep.}
   -> Finger_Stairs_Up
 
 === Finger_Stairs_Up ===
@@ -102,7 +102,7 @@ It looks like a bedroom but the main furniture are gone.
 
 + [Examine the shelves <shelves>]
   And odd collection of mismatched books and artefact.
-  You pick one but can't decipher the language
+  You pick one but can't decipher the language.
   -> choice
 
 + [Inspect the door <door>]
@@ -133,12 +133,13 @@ It looks like a bedroom but the main furniture are gone.
 + {!finger_bathroom_opened && !can_open_door}[Inspect the door <door>]
   ~ finger_inspected_door = true
   The door seems loosely locked from the other side. You can distinguish the silouhette of a simple latch between the two doors.
-  you could probably push it up with a thin object.
+  You could probably push it up with a thin object.
   -> choice
 
 + {!finger_bathroom_opened && can_open_door}[Lift the lock <door>]
   You insert the card between the two doors.
   ~ finger_bathroom_opened = true
+  ~ inventory -= (tarot)
   #variant: Open
   You gently push the latch up and slide open the door.
   You're immediatly seized by a strong acrid smell.
@@ -176,7 +177,7 @@ Something terrible happened here.
     #variant: No_Scissors
 }
 Someone is lying inside the tub, lifeless.
-Little bits of mold are floating in the placid blood
+Little bits of mold are floating in the placid blood.
 -> choice
 = choice
 + [Back to the bathroom <back>]
@@ -225,6 +226,7 @@ Despite bright red painted nails, the bloated skin is dark and reminds you of th
 + {can_cut_finger} [Cut off the finger <hand>]
   The horror of the situations is numbing.
   ~ inventory += (finger)
+  ~ inventory -= (scissors)
   ~ finger_cut = true
   #variant: Cut
   The blade cuts through the flesh easily.
@@ -247,7 +249,7 @@ You almost scream as the hand retracts and body disappears inside the tub.
 
 + {!finger_octopus_appeared}[Look inside the tub <whole_tub>]
   #sequence: Blob
-  You can't see anything through the crimson water
+  You can't see anything through the crimson water.
   #variant: Blob_02
   ~ finger_octopus_appeared = true
   Ripples sudently appear and a tentacle emerges from the tub.
@@ -317,12 +319,12 @@ It's coming after you now.
   -> Finger_Corridor_Chase
 
 + [Look at the creature <door>]
-  adrenaline is racing in your veins.
+  Adrenaline is racing in your veins.
   -> choice
 
 = Blob_02
 #variant: Blob_02
-how can it be so big!
+How can it be so big!
 -> choice
 
 = Blob_03
@@ -358,12 +360,12 @@ It's getting more agile.
 
 = Blob_02
 #variant: Blob_02
-Tentacles creeps from everywhere
+Tentacles creeps from everywhere.
 -> choice
 
 = Blob_03
 #variant: Blob_03
-You feel some trying to grasp at your arm
+You feel something trying to grasp at your arm.
 -> choice
 
 = Dead
@@ -433,7 +435,7 @@ You almost reached the hall.
 
 = Blob_02
 #variant: Blob_02
-Tentacles are bursting from everywhere
+Tentacles are bursting from everywhere.
 -> choice
 
 = Blob_03
@@ -444,7 +446,7 @@ It's getting at the door!
 = Dead
 #dead:
 The creature covers your only escape.
-Helpless, you're quickly taken by its slimy embrace
+Helpless, you're quickly taken by its slimy embrace.
 You pray every god known to man as you feel life leaving your body.
 + [try again]
   -> Finger_Try_Again

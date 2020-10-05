@@ -8,8 +8,8 @@ VAR exterior_visited_shed = false
 === Exterior_Front ===
 // interactions: statue, door, left, right
 #location: Exterior_Front
-This mansion, once opulent, looks rather abandonned
-A towering statue seem to watch over the property
+This mansion, once opulent, looks rather abandonned.
+A towering statue seems to watch over the property.
 -> choice
 = choice
 + [Knock on the door <door>]
@@ -19,7 +19,7 @@ A towering statue seem to watch over the property
 
 + [Examine the statue <statue>]
   Strange slender dark silouhettes.
-  They represent a familly, but their alien look gives you chills.
+  They represent a family, but their alien look gives you chills.
   -> choice
 
 + [Go around the right corner <right>]
@@ -131,7 +131,7 @@ Nothing has been touched in a long time.
   - exterior_used_ladder:
     #variant: Put_Ladder
 }
-A tiled terrace  is nested at the back of the house.
+A tiled terrace is nested at the back of the house.
 -> choice
 = choice
 ~ temp can_use_ladder = exterior_inspected_back_window && (inventory ? ladder)
