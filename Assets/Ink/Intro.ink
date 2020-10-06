@@ -4,6 +4,8 @@ VAR intro_checked_tools = false
 === Intro_Car_Driving ===
 // interactions: road
 #location: Intro_Car_Driving
+#music: lvl0
+#crossfade: 8.0
 It has been one year since the accident. One endlessly long year looking for the truth.
 You know your child is alive. All the answers are out there.
 -> choice

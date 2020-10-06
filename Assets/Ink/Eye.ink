@@ -11,6 +11,7 @@ VAR eye_inspected_hole = false
 // interactions: back, right_door, left_door, bed, crucifix, bedside_table
 // variants : cross_down
 #location: Eye_Bedroom
+#music: lvl0
 {
   - eye_cross_down:
     #variant: cross_down
@@ -112,6 +113,8 @@ You feel its wamrth on your neck.
 
 = Dead
 #dead:
+#music: none
+#crossfade: 8.0
 You feel the flesh touching your back. A chill fusing down your spine.
 The dread doesn't last long as the creature suck you in, thick tar like liquid filling your lungs.
 + [try again]
@@ -206,6 +209,8 @@ It's touching your back.
 
 = Dead
 #dead:
+#music: none
+#crossfade: 8.0
 You jump forward to escape its grasp, falling onto the heater. You scream as you burn your face.
 A swift death relieves you from the pain as the creature crush you in the corner.
 + [try again]
@@ -216,6 +221,8 @@ A swift death relieves you from the pain as the creature crush you in the corner
 // variants: Blob_02, Blob_03
 // sequences: Spawning
 #location: Eye_Blob
+#music: lvl1
+#crossfade: 3.0
 {
   -inventory ? attic_key:
     ->Blob_01
@@ -269,6 +276,8 @@ You can almost feel its grasp.
 
 = Dead
 #dead:
+#music: none
+#crossfade: 8.0
 You feel a warm wet touch clenching you arm. You are violently pulled backward.
 You grasp for air but a hot sticky liquid fills your lungs.
 + [try again]
@@ -292,6 +301,8 @@ You realise it was a key emerging from the goo.
 // interactions: switch, skeleton, sign, hole
 // variants: lit
 #location: Eye_Attic
+#music: none
+#crossfade: 3.0
 ~ inventory -= (attic_key)
 You lock the door behind you, hoping that it will keep the hideous thing away.
 It is pitch black in there.
@@ -299,6 +310,8 @@ It is pitch black in there.
 = dark
 + [Turn the light on <switch>]
   #variant: lit
+  #music: lvl0
+  #crossfade: 6.0
   The bright tube light hurts your eyes.
   What you discover doesn't make you very hopeful.
   -> light

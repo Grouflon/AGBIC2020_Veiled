@@ -3,6 +3,8 @@ VAR end_recognized_child = false
 === End_Stairs ===
 // interactions: stairs
 #location: End_Stairs
+#music: none
+#crossfade: 8.0
 Just as you pass the door, it closes behind you.
 A huge staircase unfolds before you.
 -> choice
@@ -19,6 +21,8 @@ A huge staircase unfolds before you.
 === End_Corridor ===
 // interactions: door
 #location: End_Corridor
+#music: end
+#crossfade: 20.0
 At some point, the stairs ends into a large corridor.
 There is a single door at the end with light coming out of it.
 + [Go to the door <door>]
@@ -30,6 +34,8 @@ There is a single door at the end with light coming out of it.
 // interactions: chair, glass, screen
 // sequences: wait
 #location: End_Room
+#music: end0
+#crossfade: 8.0
 You hear the door lock behind you quickly after you enter.
 After a few moments, the silence is broken by a crackling speaker sound.
 #clear:
@@ -62,6 +68,8 @@ After a few moments, the silence is broken by a crackling speaker sound.
 // interactions: child
 // variants:
 #location: End_Mirror
+#music: end1
+#crossfade: 8.0
 Another dark entity lies inert in the other room.
 You don't understand what is expected of you now.
 After a few moments of silence, the man's voice booms again.
@@ -141,6 +149,8 @@ Even the sound, even the pain is fading out, except for a small humming voice.
 // variants: Daddy
 #location: End_Window
 As the suffering slowly fades, you start to remember.
+#music: none
+#crossfade: 10.0
 That voice that you missed for so long now.
 #variant: Daddy
 And that sweet face.

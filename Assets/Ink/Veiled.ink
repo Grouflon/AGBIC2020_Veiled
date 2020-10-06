@@ -7,21 +7,22 @@ LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, ta
 ~ inventory += (attic_key)
 -> Eye_Blob*/
 
-/*// Debug Eye Bedroom
+// eye
+/*~ hall_scanner_seen = true
 ->Eye_Bedroom*/
 
-// eye
-//~ hall_scanner_seen = true
-//->Eye_Bedroom
+// finger
+/*~ inventory += (tarot)
+-> Finger_Bedroom_Close*/
 
-/*-> Finger_Tub_Chase
-~ inventory += (tarot)*/
-//-> Finger_Bottom
+// kid
+/*~ inventory += (tape)
+-> Finger_Corridor_Up*/
 
 // End
-//~ inventory += (eyeball)
-//~ inventory += (finger)
-//-> Hall_Main
+/*~ inventory += (eyeball)
+~ inventory += (finger)
+-> Hall_Main*/
 
 -> Intro_Car_Driving
 

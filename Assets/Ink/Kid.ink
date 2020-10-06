@@ -10,6 +10,11 @@ VAR kid_used_tape = false
 // sequences: Melt
 #location: Kid
 {
+  -kid_used_tape:
+    #music: lullaby
+    #crossfade: 3.0
+}
+{
   -kid_melted:
     #variant: Melt_03
     The smell makes your guts inside out.
@@ -48,7 +53,7 @@ VAR kid_used_tape = false
   -> Kid_Hand
 
 + {kid_melted} [Look at the body <kid>]
-  You can't beleive what just happened!
+  You can't believe what just happened!
   Poor kid.
   It breaks your heart.
   -> choice
@@ -125,7 +130,10 @@ What is it? A card?
 + {can_use_player && !kid_used_tape}[Play the tape <player>]
   #variant: Tape
   ~ kid_used_tape = true
+  ~ inventory -= (tape)
   You insert the tape and press play.
+  #music: lullaby
+  #crossfade: 3.0
   A lullaby starts playing.
   Heartbreaking.
   -> choice

@@ -18,7 +18,7 @@ A towering statue seems to watch over the property.
   -> choice
 
 + [Examine the statue <statue>]
-  Strange slender dark silouhettes.
+  Strange slender dark silhouettes.
   They represent a family, but their alien look gives you chills.
   -> choice
 

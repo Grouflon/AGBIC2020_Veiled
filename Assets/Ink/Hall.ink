@@ -14,6 +14,8 @@ You run after him.
 === Hall_Main ===
 // left_door, right_door, lab_door, stairs
 #location: Hall_Main
+#music: lvl0
+#crossfade: 3.0
 {
   -hall_scanner_used:
     {!The result of using the scanners is a bit messy but it worked. You hear the door unlock.}

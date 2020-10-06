@@ -83,6 +83,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_audioManager = FindObjectOfType<AudioManager>();
+
         setPalette("default");
 
         textContainer.text = "";
@@ -308,6 +310,8 @@ public class GameManager : MonoBehaviour
             bool clear = false;
             bool isDead = false;
             bool isEnd = false;
+            float crossfade = 0.0f;
+            string music = "";
             foreach (string tag in m_story.currentTags)
             {
                 string[] split = tag.Split(':');
@@ -347,12 +351,25 @@ public class GameManager : MonoBehaviour
                     {
                         isEnd = true;
                     }
+                    else if (key == "music")
+                    {
+                        music = value;
+                    }
+                    else if (key == "crossfade")
+                    {
+                        crossfade = float.Parse(value);
+                    }
                 }
             }
 
             if (nextPalette.Length > 0)
             {
                 setPalette(nextPalette);
+            }
+
+            if (music.Length > 0)
+            {
+                m_audioManager.fadeMusicIn(music, crossfade);
             }
 
             if (nextLocation.Length > 0)
@@ -437,7 +454,7 @@ public class GameManager : MonoBehaviour
                         if (m_displayedCharacterCount % 4 == 0)
                         {
                             int soundId = Random.Range(0, typewriterFX.Length);
-                            spawnAudioFX(typewriterFX[soundId], typewriterMixerGroup);
+                            m_audioManager.spawnAudioFX(typewriterFX[soundId], typewriterMixerGroup);
                         }
 
                         ++m_displayedCharacterCount;
@@ -618,18 +635,6 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    public AudioFXController spawnAudioFX(AudioClip _clip, AudioMixerGroup _mixerGroup = null)
-    {
-        AudioFXController controller = Instantiate<AudioFXController>(audioFXPrefab, Vector3.zero, Quaternion.identity);
-        controller.audioSource.clip = _clip;
-        if (_mixerGroup)
-        {
-            controller.audioSource.outputAudioMixerGroup = _mixerGroup;
-        }
-        controller.audioSource.Play();
-        return controller;
-    }
-
     void setIventoryOpen(bool _open)
     {
         if (_open == m_isInventoryOpen)
@@ -720,4 +725,5 @@ public class GameManager : MonoBehaviour
     private bool m_breakSequence = false;
     private bool m_isEnd = false;
     private bool m_isDead = false;
+    private AudioManager m_audioManager;
 }

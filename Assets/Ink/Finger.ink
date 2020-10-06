@@ -69,8 +69,10 @@ The stairs leads back to the lounge.
 // variant: Blob_01, Blob_02, Blob_03
 // sequences : Blob
 #location: Finger_Corridor_Up
+#music: lvl0
+#crossfade: 3.0
 A long corridor spreads before you.
-You try to be quiet but the flooring is squeaky.
+{!You try to be quiet but the flooring is squeaky.}
 -> choice
 = choice
 + [Back to the stairs <back>]
@@ -113,6 +115,8 @@ It looks like a bedroom but the main furniture are gone.
 // interactions: back, door, trinket
 // variant: Open
 #location: Finger_Bedroom_Close
+#music: lvl0
+#crossfade: 3.0
 {
   - finger_bathroom_opened:
     #variant: Open
@@ -172,6 +176,8 @@ Something terrible happened here.
 // interactions: back, tub, hand, cissors
 // variant: No_Scissors, Blob_01, Blob_02, Blob_03
 #location: Finger_Tub
+#music: lvl1
+#crossfade: 3.0
 {
   -finger_scissors_taken:
     #variant: No_Scissors
@@ -205,6 +211,8 @@ This house starts to weight on you.
 // interactions: back, hand
 // variant: Cut
 #location: Finger_Hand
+#music: lvl1
+#crossfade: 3.0
 {
   -finger_cut:
     #variant: Cut
@@ -301,6 +309,8 @@ The large one is getting dangerously close.
 
 = Dead
 #dead:
+#music: none
+#crossfade: 8.0
 Unable to move as tremors seize you, you feel the cold touch of a tentacle wrapping around your head.
 The burst of pain knocks unconsious. Lucky for you, you won't hear the sound of your every bones crushing.
 + [try again]
@@ -334,6 +344,8 @@ That can't be real!
 
 = Dead
 #dead:
+#music: none
+#crossfade: 8.0
 A large tentacle violentely throw you against the wall.
 Head bleeding, you're unable to move. The dark mass reaches your body and crush you.
 + [try again]
@@ -370,6 +382,8 @@ You feel something trying to grasp at your arm.
 
 = Dead
 #dead:
+#music: none
+#crossfade: 8.0
 You are violently pulled backward.
 A bright flash of light blinds you as your neck snaps under the grip of the monster.
 + [try again]
@@ -409,6 +423,8 @@ Do something!
 
 = Dead
 #dead:
+#music: none
+#crossfade: 8.0
 As the tentacles seized your legs, you see the body coming down, crushing you in it's way.
 + [try again]
   -> Finger_Try_Again
@@ -430,7 +446,7 @@ You almost reached the hall.
 
 + [Flee to the hall <door>]
   You boom inside the hall and shut the door behind you.
-  You hear the creature crashing on the door. thankfully it doesn't hopen from this side.
+  You hear the creature crashing on the door. thankfully it doesn't open from this side.
   -> Hall_Main
 
 = Blob_02
@@ -445,6 +461,8 @@ It's getting at the door!
 
 = Dead
 #dead:
+#music: none
+#crossfade: 8.0
 The creature covers your only escape.
 Helpless, you're quickly taken by its slimy embrace.
 You pray every god known to man as you feel life leaving your body.
