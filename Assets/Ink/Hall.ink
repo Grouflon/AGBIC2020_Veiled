@@ -44,7 +44,7 @@ You run after him.
   -> choice
 
 + [Open the door <right_door>]
-  {!You grasp the cold handle. The door seem to weep as you push it open.}
+  {!You grasp the cold handle. The door seems to weep as you push it open.}
   -> Dinner_View02
 
 + {!hall_scanner_seen} [Follow the man <lab_door>]
