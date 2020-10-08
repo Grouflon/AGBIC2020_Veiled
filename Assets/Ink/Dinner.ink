@@ -84,7 +84,7 @@ A few family photos are on display.
 + {!dinner_inspected_photo} [Look at the photo <photo>]
   ~ dinner_inspected_photo = true
   Maybe they are your hosts.
-  The photograph seems to be torn on the corner.
+  The frame is missing a glass panel, that's odd.
   -> choice
 
 + {dinner_inspected_photo && !dinner_torn_photo} [Take off the photo <photo>]

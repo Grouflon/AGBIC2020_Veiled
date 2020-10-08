@@ -6,8 +6,8 @@ VAR intro_checked_tools = false
 #location: Intro_Car_Driving
 #music: lvl0
 #crossfade: 8.0
-It has been one year since the accident. One endlessly long year looking for the truth.
-You know your child is alive. All the answers are out there.
+It has been one year since the incident. One endlessly long year looking for the truth.
+You know your child is alive. All the answers must be out there.
 -> choice
 = choice
 + [Continue driving <road>]
@@ -54,6 +54,7 @@ Ominous twisted trees watch you venture deeper into the woods.
 #location: Intro_Portail
 The property is closed off by a large gate.
 It is too high to climb over.
+Is your child really here?
 ->choice
 = choice
 ~ temp can_open_gate = intro_checked_gate && (inventory ? crowbar)
