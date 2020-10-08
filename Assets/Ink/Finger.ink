@@ -176,8 +176,6 @@ Something terrible happened here.
 // interactions: back, tub, hand, cissors
 // variant: No_Scissors, Blob_01, Blob_02, Blob_03
 #location: Finger_Tub
-#music: lvl1
-#crossfade: 3.0
 {
   -finger_scissors_taken:
     #variant: No_Scissors
@@ -211,7 +209,7 @@ This house starts to weight on you.
 // interactions: back, hand
 // variant: Cut
 #location: Finger_Hand
-#music: lvl1
+#music: lvl0
 #crossfade: 3.0
 {
   -finger_cut:
@@ -259,6 +257,8 @@ You almost scream as the hand retracts and body disappears inside the tub.
   #sequence: Blob
   You can't see anything through the crimson water.
   #variant: Blob_02
+  #music: lvl1
+  #crossfade: 3.0
   ~ finger_octopus_appeared = true
   Ripples sudently appear and a tentacle emerges from the tub.
   -> choice
@@ -446,7 +446,6 @@ You almost reached the hall.
 
 + [Flee to the hall <door>]
   You boom inside the hall and shut the door behind you.
-  You hear the creature crashing on the door. thankfully it doesn't open from this side.
   -> Hall_Main
 
 = Blob_02

@@ -20,7 +20,8 @@ LIST inventory = crowbar, ladder, eyeball, attic_key, scissors, finger, tape, ta
 -> Finger_Corridor_Up*/
 
 // End
-/*~ inventory += (eyeball)
+/*~ finger_octopus_appeared = true
+~ inventory += (eyeball)
 ~ inventory += (finger)
 -> Hall_Main*/
 

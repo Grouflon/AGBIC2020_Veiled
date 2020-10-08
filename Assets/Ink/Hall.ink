@@ -21,7 +21,8 @@ You run after him.
     {!The result of using the scanners is a bit messy but it worked. You hear the door unlock.}
     Nothing stands between the man and you now.
   -finger_octopus_appeared:
-    {!You really hope it don't know how to open doors.}
+    {!You hear the creature crashing on the door.}
+    {!Thankfully it doesn't open from this side.}
     You are in the main hall.
   -hall_scanner_seen:
     You are in the main hall.

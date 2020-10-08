@@ -73,6 +73,8 @@ MonoBehaviour:
     sequence:
     - path: End_Tray.Do_It
       delay: 5
+    - path: End_Tray.Conciliate
+      delay: 6
   - name: Injection
     sequence:
     - path: End_Tray.Injected

@@ -1,6 +1,7 @@
 VAR kid_curtain_opened = false
 VAR kid_down = false
 VAR kid_melted = false
+VAR kid_fully_melted = false
 VAR kid_player_inspected = false
 VAR kid_used_tape = false
 
@@ -52,7 +53,7 @@ VAR kid_used_tape = false
   As you reach to close the child's eyes, you notice something in his hand.
   -> Kid_Hand
 
-+ {kid_melted} [Look at the body <kid>]
++ {kid_fully_melted} [Look at the body <kid>]
   You can't believe what just happened!
   Poor kid.
   It breaks your heart.
@@ -86,6 +87,7 @@ What's happening?! His skin is suddenly very hot!
 -> choice
 = Melt_03
 #variant: Melt_03
+~ kid_fully_melted = true
 -> choice
 
 === Kid_Hand ===

@@ -135,6 +135,11 @@ The saturated voice is more an more assertive.
 "Do it now!" screams the voice.
 -> choice
 
+= Conciliate
+"This void in your heart, this longing"
+"It can all fade away. Let it flow in your veins."
+-> choice
+
 = Injected
 #variant: Hand_03
 Suddenly a tide of pain rush through your whole body.
