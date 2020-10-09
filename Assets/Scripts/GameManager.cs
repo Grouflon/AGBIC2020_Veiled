@@ -7,6 +7,7 @@ using Ink.Runtime;
 using TMPro;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using System.Globalization;
 
 using System.Text.RegularExpressions;
 
@@ -357,7 +358,7 @@ public class GameManager : MonoBehaviour
                     }
                     else if (key == "crossfade")
                     {
-                        crossfade = float.Parse(value);
+                        crossfade = float.Parse(value, CultureInfo.InvariantCulture.NumberFormat);
                     }
                 }
             }
