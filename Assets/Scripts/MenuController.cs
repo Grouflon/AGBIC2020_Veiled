@@ -120,7 +120,9 @@ public class MenuController : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
         startButton.gameObject.SetActive(true);
+#if !UNITY_WEBGL
         exitButton.gameObject.SetActive(true);
+#endif
 
         cursor.setMode(CursorMode.Idle);
         m_canInteract = true;
