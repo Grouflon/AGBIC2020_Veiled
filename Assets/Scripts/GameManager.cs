@@ -224,7 +224,6 @@ public class GameManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 setIventoryOpen(false);
-                textContainer.text = "";
                 m_story.ChooseChoiceIndex(hoveredChoice.index);
                 StartCoroutine(onAdvanceStory());
                 return;
@@ -302,6 +301,12 @@ public class GameManager : MonoBehaviour
         while (m_story.canContinue)
         {
             string line = m_story.Continue();
+
+            // CLEAR TEXT
+            if (isFirstLine && line.Length > 0)
+            {
+                currentTextContainer.text = "";
+            }
 
             // RESOLVE TAGS
             string nextPalette = "";
@@ -399,8 +404,6 @@ public class GameManager : MonoBehaviour
             if (nextSequence.Length > 0)
             {
                 StartCoroutine(playSequence(m_currentScreen.getSequence(nextSequence)));
-                isFirstLine = true;
-                comeFromTransition = true;
             }
 
             // DISPLAY TEXT
@@ -427,7 +430,7 @@ public class GameManager : MonoBehaviour
                 m_currentScreen.setVariant(nextVariant);
             }
 
-            if (!comeFromTransition && isFirstLine)
+            if (!comeFromTransition && isFirstLine && line.Length > 0)
             {
                 yield return StartCoroutine(skippablePause(0.5f));
             }
@@ -477,8 +480,7 @@ public class GameManager : MonoBehaviour
             currentTextContainer.text = currentTextContainer.text + "\n...";
 
             m_canSkip = false;
-
-            //yield return StartCoroutine(skippablePause(0.5f));
+            m_skipRequested = false;
         }
 
         currentTextContainer.text = currentTextContainer.text.Substring(0, currentTextContainer.text.Length - 3);
@@ -618,7 +620,6 @@ public class GameManager : MonoBehaviour
                 break;
 
             m_story.ChoosePathString(_sequence.sequence[i].path);
-            textContainer.text = "";
             yield return StartCoroutine(onAdvanceStory());
         }
         m_breakSequence = false;

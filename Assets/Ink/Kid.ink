@@ -75,8 +75,8 @@ VAR kid_used_tape = false
 #location: Kid
 #variant: Kid_Down
 ~ kid_melted = true
-What's happening?! His skin is suddenly very hot!
 #sequence: Melt
+What's happening?! His skin is suddenly very hot!
 -> choice
 
 = Melt_01
