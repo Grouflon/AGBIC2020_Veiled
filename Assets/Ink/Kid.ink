@@ -124,7 +124,7 @@ What is it? A card?
 + [Back to the room <back>]
   -> Kid
 
-+ {!can_use_player}[Inspect the player <player>]
++ {!can_use_player && !kid_used_tape}[Inspect the player <player>]
   ~ kid_player_inspected = true
   There is no tape in it.
   -> choice

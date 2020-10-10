@@ -19,6 +19,7 @@ public class CursorController : MonoBehaviour
     public RectTransform crossSkip;
     public RectTransform clock;
     public ChoiceBoxController choiceBox;
+    public RectTransform gameCanvas;
 
     [HideInInspector]
     public RectTransform rectTransform { get; private set; }
@@ -30,9 +31,8 @@ public class CursorController : MonoBehaviour
 
     private void Update()
     {
-        GameManager gm = FindObjectOfType<GameManager>();
-        float xMouseRatio = (Input.mousePosition.x - (Screen.width * 0.5f)) / gm.gameCanvas.sizeDelta.x;
-        float yMouseRatio = (Input.mousePosition.y - (Screen.height * 0.5f)) / gm.gameCanvas.sizeDelta.y;
+        float xMouseRatio = (Input.mousePosition.x - (Screen.width * 0.5f)) / gameCanvas.sizeDelta.x;
+        float yMouseRatio = (Input.mousePosition.y - (Screen.height * 0.5f)) / gameCanvas.sizeDelta.y;
         Vector3 cursorPosition = new Vector3(Mathf.Round((xMouseRatio) * 1280.0f), Mathf.Round((yMouseRatio) * 720.0f), rectTransform.localPosition.z);
         /*Vector3 cursorPosition = new Vector3(
             Mathf.Round(Input.mousePosition.x * 0.5f) * 2.0f,

@@ -3976,6 +3976,7 @@ MonoBehaviour:
   crossSkip: {fileID: 1172126368}
   clock: {fileID: 1373293293}
   choiceBox: {fileID: 176980149}
+  gameCanvas: {fileID: 511215645}
 --- !u!1001 &1216303535343665287
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,6 +12,11 @@ public class ButtonController : MonoBehaviour
 
     public bool invert = false;
 
+    void Awake()
+    {
+        setHovered(false);    
+    }
+
     public void setHovered(bool _hovered)
     {
         if ((_hovered && !invert) || (!_hovered && invert))

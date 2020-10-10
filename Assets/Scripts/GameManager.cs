@@ -268,7 +268,7 @@ public class GameManager : MonoBehaviour
 
             if (backToMenuHovered && Input.GetMouseButtonDown(0))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                SceneManager.LoadScene("Menu");
             }
         }
         else
