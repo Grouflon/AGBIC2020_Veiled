@@ -102,7 +102,7 @@ After a few moments of silence, the man's voice booms again.
 // variants: No_Syringe, Hand_01, Hand_02, Hand_03, Hand_04
 // sequences: Do_It
 #location: End_Tray
-The saturated voice is more an more assertive.
+The saturated voice is more and more assertive.
 "You can be together again you know."
 "But before that I need you to administrate yourself my special treatment."
 -> choice
